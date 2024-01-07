@@ -86,7 +86,6 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
 			style={{ flex: 1, justifyContent: "center" }}
 		>
 			<KeyboardAvoidingView
-				// behavior={Platform.OS === "ios" ? "padding" : "height"}
 				behavior={Platform.OS === "ios" ? "padding" : "height"}
 				style={{ flex: 1 }}
 				// keyboardVerticalOffset={60}
@@ -193,6 +192,8 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
 											onPress={handleSubmit}
 											size="lg"
 											loading={isSubmitting}
+											color="#3B71F3"
+											radius="md"
 										>
 											Register
 										</Button>

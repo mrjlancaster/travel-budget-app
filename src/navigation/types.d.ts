@@ -19,7 +19,7 @@ export type AuthStack = {
 export type AuthStackProps = NativeStackScreenProps<AuthStack>;
 
 export type HomeStackParamList = {
-	Home: undefined;
+	HomeScreen: undefined;
 	TripDetails: undefined;
 	NewTrip: undefined;
 };

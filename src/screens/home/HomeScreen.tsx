@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FAB, Text, Button } from "@rneui/themed";
 import { Searchbar } from "react-native-paper";
 import TravelCard from "../../components/TravelCard";
 import SearchBox from "../../components/searchbar/SearchBox";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/authSlice";
 
 const HomeScreen = () => {
+	const { user, isAuthenticated } = useSelector(selectUser);
 	const [searchQuery, setSearchQuery] = useState("");
 	const navigation = useNavigation();
 

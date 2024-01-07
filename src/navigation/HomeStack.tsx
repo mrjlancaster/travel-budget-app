@@ -13,14 +13,13 @@ const HomeStack = () => {
 				headerShown: false,
 			}}
 		>
-			<Stack.Screen name="Home" component={HomeScreen} />
+			<Stack.Screen name="HomeScreen" component={HomeScreen} />
 			<Stack.Screen name="TripDetails" component={TripDetailScreen} />
 			<Stack.Screen
 				name="NewTrip"
 				component={CreateNewTrip}
 				options={{
-					presentation: "transparentModal",
-					gestureDirection: "vertical",
+					presentation: "modal",
 				}}
 			/>
 		</Stack.Navigator>

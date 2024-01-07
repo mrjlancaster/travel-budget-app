@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../../features/authSlice";
 import { Formik } from "formik";
 import { Button, Input } from "@rneui/themed";
-import { apiInstance } from "../../../api/axios";
 import BACKGROUND_IMAGE from "../../../../assets/background.jpg";
 import { AuthStackProps } from "../../../navigation/types";
 import { useLoginMutation } from "../../../services/api/authApi";
@@ -58,11 +57,11 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
 
 	const handleLogin = async (values: ValuesProp, actions) => {
 		try {
-			const { data } = await login(values).unwrap();
-			// const { data } = await apiInstance.post("/api/auth/login", values);
+			const response = await login(values).unwrap();
+			console.log("Login Response => ", response);
 
-			if (data.success === 1) {
-				dispatch(setCredentials(data.data));
+			if (response.success === 1) {
+				dispatch(setCredentials(response.data));
 				actions.resetForm();
 			}
 		} catch (err) {
@@ -111,7 +110,6 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
 								handleSubmit,
 								values,
 								errors,
-								isSubmitting,
 							}) => (
 								<>
 									<View style={styles.form}>
@@ -184,6 +182,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
 											</TouchableOpacity>
 										</View>
 										<Button
+											color="#3B71F3"
 											containerStyle={{
 												width: "100%",
 												marginTop: 10,
@@ -191,6 +190,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
 											onPress={handleSubmit}
 											size="lg"
 											loading={isLoading}
+											radius="md"
 										>
 											Login
 										</Button>

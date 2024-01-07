@@ -30,7 +30,6 @@ export const styles = StyleSheet.create({
 		// top: "20%",
 	},
 	form: {
-		justifyContent: "center",
 		alignItems: "center",
 		width: "100%",
 	},

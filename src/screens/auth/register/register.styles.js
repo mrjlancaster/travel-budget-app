@@ -13,7 +13,7 @@ const shadow = (opac, w, h) => {
 export const styles = StyleSheet.create({
 	scrollView: {
 		flex: 1,
-		justifyContent: "space-evenly",
+		justifyContent: "center",
 		paddingHorizontal: 10,
 	},
 
@@ -26,8 +26,6 @@ export const styles = StyleSheet.create({
 		...shadow(0.1, 1, 1),
 	},
 	form: {
-		// bottom: 20,
-		justifyContent: "center",
 		width: "100%",
 	},
 	inputLabel: {
@@ -41,6 +39,7 @@ export const styles = StyleSheet.create({
 		marginTop: 8,
 	},
 	loginLinkText: {
+		textAlign: "center",
 		fontSize: 17,
 		top: 20,
 		color: "#575755",
