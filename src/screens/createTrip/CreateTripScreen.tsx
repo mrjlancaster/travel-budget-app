@@ -1,17 +1,12 @@
 import React, { useState } from "react";
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	StyleSheet,
-	TextInput,
-} from "react-native";
+import { SafeAreaView, Text, TouchableOpacity, ScrollView } from "react-native";
 import { styles } from "./styles";
 import { Button, Input } from "@rneui/themed";
 import TopNavigation from "../../components/TopNavigation";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { Icon } from "@rneui/themed";
 import { HomeStackProps } from "../../navigation/types";
+import moment from "moment";
+import CustomButton from "../../components/buttons/CustomButton";
 
 const PlaneTakeoffIcon = () => (
 	<Icon name="airplane-takeoff" type="material-community" />
@@ -21,16 +16,32 @@ const PlaneLandingIcon = () => (
 	<Icon name="airplane-landing" type="material-community" />
 );
 
+const CalendarIcon = () => (
+	<Icon name="calendar-range-outline" type="material-community" />
+);
+
 const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 	const [isLoading, setIsLoading] = useState(false);
-	const [from, setFrom] = useState("");
-	const [to, setTo] = useState("");
+	const [state, setState] = useState({
+		origin: "",
+		destination: "",
+		departureDate: moment().format("ddd, MMM DD"),
+		arrivalDate: moment().add(3, "days").format("ddd, MMM DD"),
+		airline: "",
+	});
+
+	console.log();
 
 	const goBack = () => navigation.pop();
 
 	const clearInputs = () => {
-		setFrom("");
-		setTo("");
+		setState({
+			origin: "",
+			destination: "",
+			departureDate: moment().format("ddd, MM DD"),
+			arrivalDate: moment().format("ddd, MM DD"),
+			airline: "",
+		});
 	};
 
 	const handleSubmit = async (e) => {
@@ -44,38 +55,44 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 	};
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.header}>
-				<TopNavigation title="New Trip" goback={goBack} />
-				{/* 
-				<TouchableOpacity>
-					<Text onPress={goBack}>Back</Text>
-				</TouchableOpacity> */}
-			</View>
-
-			<View style={styles.content}>
+		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+			<ScrollView style={styles.container}>
 				<Input
 					label="Where from"
 					leftIcon={<PlaneTakeoffIcon />}
 					placeholder="Enter an origin"
-					onChangeText={(value) => setFrom(value)}
+					onChangeText={(value) => setState({ ...state, origin: value })}
 				/>
 
 				<Input
 					label="Where to"
 					leftIcon={<PlaneLandingIcon />}
 					placeholder="Enter a destination"
-					onChangeText={(value) => setTo(value)}
+					onChangeText={(value) =>
+						setState({ ...state, destination: value })
+					}
 				/>
 
-				<Button
-					size="sm"
-					buttonStyle={styles.button}
-					title="Create"
-					loading={isLoading}
-				/>
-			</View>
-		</View>
+				<TouchableOpacity
+					style={styles.dateInput}
+					onPress={() => navigation.navigate("DatePickerModal")}
+				>
+					<CalendarIcon />
+					<Text>
+						{state.departureDate} - {state.arrivalDate}
+					</Text>
+				</TouchableOpacity>
+
+				<CustomButton onPress={handleSubmit} title="Create" />
+
+				{/* <Button
+						size="sm"
+						buttonStyle={styles.button}
+						title="Create"
+						loading={isLoading}
+					/> */}
+			</ScrollView>
+		</SafeAreaView>
 	);
 };
 

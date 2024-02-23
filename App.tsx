@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, StatusBar, useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { store } from "./src/app/store";
@@ -18,7 +18,6 @@ async function checkDeviceSensors() {
 }
 
 function App(): JSX.Element {
-	const loading = true;
 	const isDarkMode = useColorScheme() === "dark";
 
 	// const backgroundStyle = {

@@ -21,7 +21,9 @@ export type AuthStackProps = NativeStackScreenProps<AuthStack>;
 export type HomeStackParamList = {
 	HomeScreen: undefined;
 	TripDetails: undefined;
+	SearchModal: undefined;
 	NewTrip: undefined;
+	DatePickerModal: undefined;
 };
 
 export type HomeStackProps = NativeStackScreenProps<HomeStackParamList>;

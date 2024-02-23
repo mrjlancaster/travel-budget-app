@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FAB, Text, Button } from "@rneui/themed";
-import { Searchbar } from "react-native-paper";
+import { FAB, Text, Button, SearchBar } from "@rneui/themed";
+// import { Searchbar } from "react-native-paper";
 import TravelCard from "../../components/TravelCard";
 import SearchBox from "../../components/searchbar/SearchBox";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/authSlice";
+import Searchbar from "../../components/searchbar/Searchbar";
 
 const HomeScreen = () => {
 	const { user, isAuthenticated } = useSelector(selectUser);
@@ -15,8 +16,8 @@ const HomeScreen = () => {
 
 	const upcomingTrip = {
 		id: 1,
-		city: "Sao+Paulo",
-		country: "Brazil",
+		city: "playa+del+carmen",
+		country: "Mexico",
 	};
 
 	const handlePress = () => navigation.navigate("NewTrip");
@@ -27,31 +28,29 @@ const HomeScreen = () => {
 		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
 			{/* <TopNavigation title="Welcome, Jonathan" /> */}
 			<View style={styles.searchBarWrapper}>
-				<Searchbar
+				{/* <Searchbar
 					placeholder="Search destination..."
 					onChangeText={onChangeSearch}
 					value={searchQuery}
 					style={styles.searchBar}
-				/>
-				<SearchBox searchQuery={searchQuery} />
+				/> */}
+				<Searchbar />
+				{/* <SearchBox searchQuery={searchQuery} /> */}
 			</View>
 
 			{!searchQuery.length && (
 				<ScrollView
-					contentContainerStyle={{ flex: 1, paddingHorizontal: 10 }}
+					contentContainerStyle={{ flex: 1, paddingHorizontal: 15 }}
 				>
-					<View style={styles.cardsContainer}>
-						<TravelCard destination={upcomingTrip} />
-					</View>
-
-					<FAB
-						style={styles.createButton}
-						onPress={handlePress}
-						color="#397af8"
-						icon={{ name: "add", color: "white" }}
-					/>
+					<TravelCard destination={upcomingTrip} />
 				</ScrollView>
 			)}
+			<FAB
+				style={styles.createButton}
+				onPress={handlePress}
+				color="#397af8"
+				icon={{ name: "add", color: "white" }}
+			/>
 		</SafeAreaView>
 	);
 };
@@ -67,7 +66,7 @@ export const styles = StyleSheet.create({
 		fontSize: 24,
 	},
 	searchBarWrapper: {
-		paddingHorizontal: 10,
+		paddingHorizontal: 15,
 	},
 	searchBar: {
 		marginTop: 30,

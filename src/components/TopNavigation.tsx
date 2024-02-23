@@ -1,7 +1,12 @@
-import { View, StyleSheet, Text } from 'react-native';
-import { AntDesign } from 'react-native-vector-icons';
+import { View, StyleSheet, Text } from "react-native";
+import { AntDesign } from "react-native-vector-icons";
 
-const TopNavigation = ({ title, goback }) => {
+type Props = {
+	title: string;
+	goback: () => void;
+};
+
+const TopNavigation = ({ title, goback }: Props) => {
 	const handleGoBack = () => goback();
 
 	return (
@@ -18,7 +23,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		paddingHorizontal: 10,
-		fontWeight: 'bold',
+		fontWeight: "500",
 		fontSize: 24,
 	},
 });

@@ -28,7 +28,7 @@ const Root = () => {
 		};
 
 		verifyUser();
-	}, []);
+	}, [isAuthenticated]);
 
 	if (loading) {
 		return (
@@ -38,7 +38,9 @@ const Root = () => {
 		);
 	}
 
-	return isAuthenticated ? <BottomNav /> : <AuthStack />;
+	return <BottomNav />;
+
+	// return isAuthenticated ? <BottomNav /> : <AuthStack />;
 };
 
 export default Root;

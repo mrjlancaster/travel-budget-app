@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { View, Text, SafeAreaView } from "react-native";
-import { CalendarList } from "react-native-calendars";
+import { CalendarList, DateData } from "react-native-calendars";
 import CustomButton from "../../components/buttons/CustomButton";
 import { HomeStackProps } from "../../navigation/types";
+import moment from "moment";
 
 // {
 // 	"2024-01-09": {
@@ -22,31 +23,106 @@ import { HomeStackProps } from "../../navigation/types";
 // 	},
 // }
 
+const DEFAULT_SELECTED_COLOR = "#00BBF2";
+
 const DatePickerModal = ({ navigation }: HomeStackProps) => {
-	const [date, setDate] = useState(new Date());
-	const [selectedDates, setSelectedDates] = useState({});
+	const [markingType, setMarkingType] = useState(undefined);
+	const [startingDate, setStartingDate] = useState(
+		moment().format("YYYY-MM-DD")
+	);
+	const [endingDate, setEndingDate] = useState("");
 
-	// const markedDates = useMemo(() => {
-	// 	return { [date]: { selected: true } };
-	// }, [date]);
+	const [selectedDates, setSelectedDates] = useState({
+		[moment().format("YYYY-MM-DD")]: {
+			selected: true,
+			// color: DEFAULT_SELECTED_COLOR,
+			// startingDay: true,
+			// endingDay: true,
+			// color: "#007bff",
+			// textColor: "#fff",
+		},
+	});
 
-	const handleChange = (selected) => {
-		console.log(selected);
-		let selectedDate = selected.dateString;
-		let newDates = selectedDates;
+	const startingDayObj = {
+		startingDay: true,
+		color: DEFAULT_SELECTED_COLOR,
+		textColor: "#fff",
+	};
 
-		if (selectedDates[selectedDate]) {
-			delete newDates[selectedDate];
-		} else {
-			newDates[selectedDate] = {
+	const handleChange = (selected: DateData) => {
+		const { dateString } = selected;
+		const datesInBetween: any = [];
+		const dates = {};
+		let startDate, endDate;
+
+		if (moment(dateString).isBefore(startingDate)) {
+			console.error("date is before");
+
+			dates[dateString] = {
 				selected: true,
-				startingDay: true,
-				endingDay: true,
-				disableTouchEvent: true,
+				color: DEFAULT_SELECTED_COLOR,
 			};
 
-			setSelectedDates({ ...newDates });
+			setMarkingType(undefined);
+			setSelectedDates(dates);
 		}
+
+		// if (startingDate === "") {
+		// 	setMarkingType(undefined);
+		// 	setStartingDate(dateString);
+		// } else if (startingDate !== "" && endingDate === "") {
+		// 	endDate = dateString;
+		// 	setMarkingType("period");
+		// 	setEndingDate(endDate);
+		// } else if (
+		// 	startingDate !== "" &&
+		// 	endingDate !== "" &&
+		// 	moment(dateString).isAfter(endingDate)
+		// ) {
+		// 	endDate = dateString;
+		// 	setEndingDate(endDate);
+		// }
+
+		// if (
+		// 	startingDate !== "" &&
+		// 	endingDate !== "" &&
+		// 	moment(dateString).isBefore(endingDate)
+		// ) {
+		// 	startDate = dateString;
+
+		// 	setMarkingType(undefined);
+		// 	setStartingDate(startDate);
+		// }
+
+		// while (moment(startDate) < moment(endDate)) {
+		// 	const d = moment(startDate).add(1, "days").format("YYYY-MM-DD");
+		// 	datesInBetween.push(d);
+		// 	// startDate = moment(startDate).add(1, 'days').format("YYYY-MM-DD");
+		// }
+
+		console.log("Dates in between => ", datesInBetween);
+
+		// if (selectedDates[selectedDate]) {
+		// 	const newDate = {
+		// 		[selected.dateString]: {
+		// 			selected: true,
+		// 			color: DEFAULT_SELECTED_COLOR,
+		// 		},
+		// 	};
+
+		// 	setMarkingType(undefined);
+		// 	setSelectedDates(newDate);
+		// } else {
+		// 	// const newDates[selected.dateString] = {}
+		// 	newDates[selectedDate] = {
+		// 		selected: true,
+		// 		startingDay: true,
+		// 		endingDay: true,
+		// 		disableTouchEvent: true,
+		// 	};
+
+		// 	setSelectedDates({ ...newDates });
+		// }
 	};
 
 	// const onDayPress = useCallback(
@@ -69,24 +145,28 @@ const DatePickerModal = ({ navigation }: HomeStackProps) => {
 				<CalendarList
 					onDayPress={handleChange}
 					pastScrollRange={10}
-					futureScrollRange={15}
+					futureScrollRange={10}
+					// markingType="period"
+
+					markingType={markingType}
 					markedDates={selectedDates}
-					// current="2024-01-08"
 					// markedDates={{
-					// 	"2024-01-09": {
-					// 		selected: true,
-					// 		// marked: true,
-					// 		// selectedColor: "blue",
-					// 	},
-					// 	"2024-01-10": { marked: true },
 					// 	"2024-01-11": {
-					// 		selected: true,
-					// 		marked: true,
-					// 		// selectedColor: "blue",
+					// 		startingDay: true,
+					// 		color: "#007bff",
+					// 		textColor: "#fff",
+					// 	},
+					// 	"2024-01-12": { color: "#007bff", textColor: "#fff" },
+					// 	"2024-01-13": { color: "#007bff", textColor: "#fff" },
+					// 	"2024-01-14": { color: "#007bff", textColor: "#fff" },
+					// 	"2024-01-15": {
+					// 		endingDay: true,
+					// 		color: "#007bff",
+					// 		textColor: "#fff",
 					// 	},
 					// }}
 					theme={{
-						textMonthFontSize: 24,
+						textMonthFontSize: 22,
 					}}
 				/>
 			</View>

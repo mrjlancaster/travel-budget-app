@@ -12,7 +12,7 @@ export const config = {
 const baseQuery = fetchBaseQuery({
 	baseUrl,
 	prepareHeaders: async (headers) => {
-		const token = await AsyncStorage.getItem("token");
+		const token = await AsyncStorage.getItem("accessToken");
 
 		if (token) {
 			headers.set("authorization", `Bearer ${token}`);
