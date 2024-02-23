@@ -1,10 +1,4 @@
-import {
-	Text,
-	View,
-	StyleSheet,
-	ImageBackground,
-	SafeAreaView,
-} from "react-native";
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import { HomeStackProps } from "../../navigation/types";
 
@@ -13,13 +7,6 @@ const TripDetailScreen = ({ route, navigation }: HomeStackProps) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			{/* <View style={styles.headingContainer}>
-				<TouchableOpacity onPress={() => navigation.goBack()}>
-					<Icon name="chevron-small-left" size={40} />
-				</TouchableOpacity>
-				<Text style={styles.screenTitle}>{destination.city}</Text>
-			</View> */}
-
 			<View>
 				<View style={styles.tripDetailsContainer}>
 					<View style={styles.tripTitleContainer}>
