@@ -55,7 +55,7 @@ const HomeStack = () => {
 							// backgroundColor: "#000",
 						},
 
-						headerTitleStyle: { fontSize: 24 },
+						headerTitleStyle: { fontSize: 21 },
 					}}
 				/>
 				<Stack.Screen

@@ -14,20 +14,21 @@ export const styles = StyleSheet.create({
 		fontSize: 24,
 	},
 	label: {
-		fontSize: 18,
-		fontWeight: "400",
-		marginLeft: 10,
+		fontWeight: "500",
+		opacity: 0.8,
+		fontSize: 16,
+		left: 10,
 	},
-	textInput: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
-		padding: 10,
-	},
-	dateInput: {
-		borderWidth: 1,
-		flexDirection: "row",
-		alignItems: "center",
+	inputGroup: {
 		gap: 10,
+		marginTop: 20,
+	},
+
+	dateInputWrapper: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	submitButtonWrapper: {
+		marginTop: 20,
 	},
 });

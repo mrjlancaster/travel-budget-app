@@ -2,8 +2,8 @@ import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
 type Props = {
-	onPress: () => void;
 	title: string;
+	onPress: () => void;
 };
 
 const CustomButton = ({ onPress, title }: Props) => {
@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		paddingVertical: 10,
 		paddingHorizontal: 12,
-		width: "93%",
+		// width: "93%",
+		width: "100%",
 		alignSelf: "center",
 	},
 	buttonText: {

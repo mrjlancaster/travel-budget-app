@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { FAB, Text, Button, SearchBar } from "@rneui/themed";
 // import { Searchbar } from "react-native-paper";
 import TravelCard from "../../components/TravelCard";
@@ -8,11 +7,11 @@ import SearchBox from "../../components/searchbar/SearchBox";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/authSlice";
 import Searchbar from "../../components/searchbar/Searchbar";
+import { HomeStackProps } from "../../navigation/types";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: HomeStackProps) => {
 	const { user, isAuthenticated } = useSelector(selectUser);
 	const [searchQuery, setSearchQuery] = useState("");
-	const navigation = useNavigation();
 
 	const upcomingTrip = {
 		id: 1,
@@ -108,6 +107,12 @@ export const styles = StyleSheet.create({
 		position: "absolute",
 		alignSelf: "center",
 		bottom: 20,
+		shadowOpacity: 0.2,
+		shadowOffset: {
+			width: 1,
+			height: 1,
+		},
+		elevation: 3,
 	},
 });
 
