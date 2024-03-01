@@ -1,10 +1,18 @@
 import { api, config } from "../index";
 
-type Trips = object[];
+interface Trip {
+	origin: string;
+	destination: string;
+	departureDate: Date;
+	returnDate: Date;
+	airline: string;
+}
+
+type Trips = Trip[];
 
 export const tripsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getTrips: builder.query<Trips, any>({
+		getTrips: builder.query<Trips, void>({
 			query: () => ({
 				url: "/api/trips",
 				// headers: config.headers,
@@ -22,7 +30,7 @@ export const tripsApi = api.injectEndpoints({
 			}),
 		}),
 
-		getTripById: builder.query({
+		getTripById: builder.query<Trip, void>({
 			query: (id) => ({
 				url: `/api/trips/${id}`,
 				// headers: config.headers,

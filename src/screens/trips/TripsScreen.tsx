@@ -14,11 +14,7 @@ const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
 	const [cardBackground, setCardBackground] = useState<null | string>(null);
-	const {
-		data: trips = [],
-		isLoading,
-		isSuccess,
-	} = useGetTripsQuery(undefined);
+	const { data: trips = [], isLoading, isSuccess } = useGetTripsQuery();
 	// const [trips, setTrips] = useState([]);
 	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
