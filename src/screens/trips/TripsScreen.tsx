@@ -6,12 +6,21 @@ import { ListItem, Icon, Image } from "@rneui/themed";
 import TopNavigation from "../../components/TopNavigation";
 import { fetchDestinationCardBg } from "../../api/pexelsApi";
 import NoTripsView from "./NoTripsView";
+import { useGetTripsQuery } from "../../services/api/tripsApi";
+import Loading from "../../components/Loading";
+import { useAppDispatch } from "../../hooks";
 
 const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
 	const [cardBackground, setCardBackground] = useState<null | string>(null);
-	const [trips, setTrips] = useState([]);
+	const {
+		data: trips = [],
+		isLoading,
+		isSuccess,
+	} = useGetTripsQuery(undefined);
+	// const [trips, setTrips] = useState([]);
+	const dispatch = useAppDispatch();
 	const navigation = useNavigation();
 
 	// const trips = [
@@ -60,13 +69,16 @@ const TripsScreen = () => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text style={styles.screenTitle}>My Trips</Text>
-			{!trips.length ? (
+			{isLoading ? (
+				<Loading />
+			) : !trips || !trips.length ? (
 				<NoTripsView />
 			) : (
 				<View>
 					<Text></Text>
 				</View>
 			)}
+
 			{/* <TopNavigation title={`${trips.length} Trips`} /> */}
 		</SafeAreaView>
 	);

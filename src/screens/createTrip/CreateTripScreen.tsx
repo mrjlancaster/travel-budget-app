@@ -16,6 +16,7 @@ import moment from "moment";
 import InputGroupContainer from "./form/InputGroupContainer";
 import CustomButton from "../../components/buttons/CustomButton";
 import DateButton from "./form/DateButton";
+import { useCreateTripMutation } from "../../services/api/tripsApi";
 
 const PlaneTakeoffIcon = () => (
 	<Icon name="airplane-takeoff" type="material-community" />
@@ -26,7 +27,9 @@ const PlaneLandingIcon = () => (
 );
 
 const CreateTripScreen = ({ navigation }: HomeStackProps) => {
+	const [createTrip, reuslt] = useCreateTripMutation();
 	const [isLoading, setIsLoading] = useState(false);
+
 	const [state, setState] = useState({
 		origin: "",
 		destination: "",
@@ -49,6 +52,16 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 
 	const handleSubmit = async () => {
 		setIsLoading(true);
+
+		try {
+			const { data } = await createTrip(state).unwrap();
+
+			if (data.success) {
+				// handle adding new trip to trip list state
+			}
+		} catch (err) {
+			console.log(err);
+		}
 
 		try {
 			// clearInputs();

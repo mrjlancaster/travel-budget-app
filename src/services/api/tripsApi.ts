@@ -1,44 +1,48 @@
 import { api, config } from "../index";
 
-export const authApi = api.injectEndpoints({
-	endpoints: (build) => ({
-		getTrips: build.query({
+type Trips = object[];
+
+export const tripsApi = api.injectEndpoints({
+	endpoints: (builder) => ({
+		getTrips: builder.query<Trips, any>({
 			query: () => ({
 				url: "/api/trips",
-				headers: config.headers,
+				// headers: config.headers,
 			}),
+			transformResponse: (response: { data: Trips }, meta, arg) =>
+				response.data,
 		}),
 
-		createTrip: build.mutation({
+		createTrip: builder.mutation({
 			query: (payload) => ({
 				url: "/api/trips",
 				method: "POST",
 				body: payload,
-				headers: config.headers,
+				// headers: config.headers,
 			}),
 		}),
 
-		getTripById: build.query({
+		getTripById: builder.query({
 			query: (id) => ({
 				url: `/api/trips/${id}`,
-				headers: config.headers,
+				// headers: config.headers,
 			}),
 		}),
 
-		updateTrip: build.mutation({
+		updateTrip: builder.mutation({
 			query: ({ id, ...patch }) => ({
 				url: `/api/trips/${id}`,
 				method: "PATCH",
 				body: patch,
-				headers: config.headers,
+				// headers: config.headers,
 			}),
 		}),
 
-		deleteTrip: build.mutation({
+		deleteTrip: builder.mutation({
 			query: (id) => ({
 				url: `/api/trips/${id}`,
 				method: "DELETE",
-				headers: config.headers,
+				// headers: config.headers,
 			}),
 		}),
 	}),
@@ -50,4 +54,4 @@ export const {
 	useCreateTripMutation,
 	useUpdateTripMutation,
 	useDeleteTripMutation,
-} = authApi;
+} = tripsApi;

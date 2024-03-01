@@ -10,6 +10,7 @@ export const authApi = api.injectEndpoints({
 				headers: config.headers,
 			}),
 		}),
+
 		register: build.mutation({
 			query: (data) => ({
 				url: "/api/auth/register",
@@ -17,7 +18,15 @@ export const authApi = api.injectEndpoints({
 				body: data,
 			}),
 		}),
+
+		refreshToken: build.query({
+			query: () => ({
+				url: "/api/auth/refresh",
+				headers: config.headers,
+			}),
+		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useRefreshTokenQuery } =
+	authApi;
