@@ -10,6 +10,11 @@ async function removeItem(key: string) {
 	await AsyncStorage.removeItem(key);
 }
 
+interface AuthState {
+	user: null | object;
+	isAuthenticated: boolean;
+}
+
 const initialState = {
 	user: null,
 	isAuthenticated: false,
@@ -52,10 +57,10 @@ const authSlice = createSlice({
 export const { setCredentials, logout, initializeFromToken } =
 	authSlice.actions;
 
-export const selectUser = (state) => {
+export const selectUser = (state: AuthState) => {
 	return {
-		user: state.auth.user,
-		isAuthenticated: state.auth.isAuthenticated,
+		user: state.user,
+		isAuthenticated: state.isAuthenticated,
 	};
 };
 

@@ -4,10 +4,11 @@ import HomeScreen from "../screens/home/HomeScreen";
 import TripDetailScreen from "../screens/tripDetails/TripDetailScreen";
 import { HomeStackParamList } from "./types";
 import CreateTripScreen from "../screens/createTrip/CreateTripScreen";
-import DatePickerModal from "../screens/createTrip/DatepickerModal";
+// import DatePickerModal from "../screens/createTrip/DatepickerModal";
 import CustomHeaderBackButton from "../components/CustomBackButton";
 import SearchModal from "../components/searchModal/SearchModal";
 import CustomHeader from "../screens/tripDetails/CustomHeader";
+import DatepickerModal from "../components/modals/DatepickerModal";
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -60,7 +61,7 @@ const HomeStack = () => {
 				/>
 				<Stack.Screen
 					name="DatePickerModal"
-					component={DatePickerModal}
+					component={DatepickerModal}
 					options={{ headerTitle: "Choose Dates" }}
 				/>
 			</Stack.Group>
