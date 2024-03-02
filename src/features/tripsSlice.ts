@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface NewTripProps {
+interface Trip {
 	origin: null | string;
 	destination: null | string;
 	departureDate: null | string;
@@ -8,10 +8,10 @@ interface NewTripProps {
 	airline: null | string;
 }
 
-interface InitialState {
-	trips: object[];
-	newTripDraft: null | NewTripProps;
-}
+type InitialState = {
+	trips: Trip[];
+	newTripDraft: null | Trip;
+};
 
 const initialState: InitialState = {
 	trips: [],

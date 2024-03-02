@@ -8,9 +8,7 @@ import { HomeStackProps } from "../../navigation/types";
 import moment from "moment";
 import InputGroupContainer from "./form/InputGroup";
 import CustomButton from "../../components/buttons/CustomButton";
-import DateButton from "./form/DateButtonGroup";
-import { useAppSelector } from "../../hooks";
-import { addNewTrip, selectNewTripDraft } from "../../features/tripsSlice";
+import DateButton from "./form/DateButton";
 
 const PlaneTakeoffIcon = () => (
 	<Icon name="airplane-takeoff" type="material-community" />
@@ -21,10 +19,8 @@ const PlaneLandingIcon = () => (
 );
 
 const CreateTripScreen = ({ navigation }: HomeStackProps) => {
+	const [createTrip, reuslt] = useCreateTripMutation();
 	const [isLoading, setIsLoading] = useState(false);
-	const newTripDraft = useAppSelector(selectNewTripDraft);
-	console.log("Draft =>", newTripDraft);
-	const [lastEdited, setLastEdited] = useState(null);
 	const [state, setState] = useState({
 		origin: "",
 		destination: "",
@@ -55,6 +51,16 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 
 	const handleSubmit = async () => {
 		setIsLoading(true);
+
+		try {
+			const { data } = await createTrip(state).unwrap();
+
+			if (data.success) {
+				// handle adding new trip to trip list state
+			}
+		} catch (err) {
+			console.log(err);
+		}
 
 		try {
 			// clearInputs();
