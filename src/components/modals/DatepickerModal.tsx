@@ -16,7 +16,7 @@ const INITIAL_STATE = {
 const DatepickerModal = ({ navigation, route }: HomeStackProps) => {
 	const [state, setState] = useState(INITIAL_STATE);
 	const [selectedDate, setSelectedDate] = useState(null);
-	const { type } = route.params;
+	const { fieldName } = route.params;
 	const dispatch = useAppDispatch();
 
 	const handleChange = (day) => {
@@ -26,7 +26,7 @@ const DatepickerModal = ({ navigation, route }: HomeStackProps) => {
 	};
 
 	const handlePress = () => {
-		const payload = { type, date: selectedDate };
+		const payload = { [fieldName]: selectedDate };
 		dispatch(addNewTrip(payload));
 		navigation.goBack();
 	};

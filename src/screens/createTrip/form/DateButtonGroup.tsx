@@ -9,25 +9,27 @@ const CalendarIcon = () => (
 
 type Props = {
 	label: string;
-	title: string;
-	type: string;
+	date: string;
+	fieldName: string;
 };
 
-const DateButton = ({ label, title, type }: Props) => {
+const DateButton = ({ label, date, fieldName }: Props) => {
 	const navigation = useNavigation();
 
 	return (
 		<View style={styles.group}>
 			<Text style={styles.label}>{label}</Text>
 			<Pressable
-				onPress={() => navigation.navigate("DatePickerModal", { type })}
+				onPress={() =>
+					navigation.navigate("DatePickerModal", { fieldName })
+				}
 				style={({ pressed }) => [
 					styles.button,
 					pressed && { opacity: 0.8 },
 				]}
 			>
 				<CalendarIcon />
-				<Text>{title}</Text>
+				<Text>{date}</Text>
 			</Pressable>
 		</View>
 	);

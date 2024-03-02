@@ -1,33 +1,32 @@
 import { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser } from "../features/authSlice";
+import { selectAuth, selectUser } from "../features/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeFromToken } from "../features/authSlice";
-// import PrivateNavigation from "./PrivateNavigation";
 import AuthStack from "./AuthStack";
 import SplashScreen from "../screens/SplashScreen";
 import BottomNav from "./BottomNav";
+import { useAppSelector, useAppDispatch } from "../hooks";
 
 const Root = () => {
+	const { isAuthenticated } = useAppSelector(selectAuth);
 	const [loading, setLoading] = useState(false);
-	const dispatch = useDispatch();
-	const { user, isAuthenticated } = useSelector(selectUser);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
+		setLoading(true);
+
 		const verifyUser = async () => {
-			setLoading(true);
 			const token = await AsyncStorage.getItem("accessToken");
 
 			if (token) {
 				dispatch(initializeFromToken(token));
 			}
-
-			setLoading(false);
 		};
 
 		verifyUser();
+		setLoading(false);
 	}, [isAuthenticated]);
 
 	if (loading) {
@@ -38,9 +37,9 @@ const Root = () => {
 		);
 	}
 
-	return <BottomNav />;
+	// return <BottomNav />;
 
-	// return isAuthenticated ? <BottomNav /> : <AuthStack />;
+	return isAuthenticated ? <BottomNav /> : <AuthStack />;
 };
 
 export default Root;

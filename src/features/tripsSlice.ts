@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
 interface Trip {
 	origin: null | string;
 	destination: null | string;
-	departureDate: null | string;
-	returnDate: null | string;
+	departure_date: null | string | Date;
+	return_date: null | string | Date;
 	airline: null | string;
 }
 
@@ -24,42 +25,35 @@ const tripsSlice = createSlice({
 	reducers: {
 		// Set trips state
 		setTrips: (state, action) => {
-			console.log("PAYLOAD => ", action.payload);
+			console.error("TRIPS STATE PAYLOAD => ", action.payload);
 			state.trips = action.payload;
 		},
+
 		addNewTrip: (state, action) => {
 			const { payload } = action;
-			console.log("PAYLOAD", payload);
+			console.log("New Trip Payload", payload);
 
-			const newTrip = { ...state.newTripDraft };
-
-			const objValues = Object.values(newTrip);
-			console.error("VALUES", objValues);
-
-			if (payload.type === "origin") {
-				newTrip.origin = payload.origin;
-			} else if (payload.type === "dest") {
-				newTrip.destination = payload.destination;
-			} else if (payload.type === "departure") {
-				newTrip.departureDate = payload.date;
-			} else if (payload.type === "return") {
-				newTrip.returnDate = payload.date;
-			}
+			const newTrip = {
+				...state.newTripDraft,
+				...payload,
+			};
 
 			console.log("NEW ENTRY", newTrip);
 			console.log("STATE", state.trips);
 
-			const arr = [...state.trips, newTrip];
-			// state.trips = arr;
-			// state.newTripDraft = newTrip;
+			state.newTripDraft = newTrip;
+		},
+
+		resetTripDraft: (state, action) => {
+			state.newTripDraft = null;
 		},
 	},
 });
 
-export const { setTrips, addNewTrip } = tripsSlice.actions;
+export const { setTrips, addNewTrip, resetTripDraft } = tripsSlice.actions;
 
-export const selectTrips = (state: InitialState) => state.trips.trips;
-export const selectNewTripDraft = (state: InitialState) =>
+export const selectTrips = (state: RootState) => state.trips.trips;
+export const selectNewTripDraft = (state: RootState) =>
 	state.trips.newTripDraft;
 
 export default tripsSlice.reducer;

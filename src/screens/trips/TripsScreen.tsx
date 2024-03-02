@@ -9,14 +9,23 @@ import NoTripsView from "./NoTripsView";
 import { useGetTripsQuery } from "../../services/api/tripsApi";
 import Loading from "../../components/Loading";
 import { useAppDispatch } from "../../hooks";
+import { setTrips } from "../../features/tripsSlice";
 
 const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
-	const [cardBackground, setCardBackground] = useState<null | string>(null);
-	const { data: trips = [], isLoading, isSuccess } = useGetTripsQuery();
-	// const [trips, setTrips] = useState([]);
 	const dispatch = useAppDispatch();
+	const [cardBackground, setCardBackground] = useState<null | string>(null);
+	const {
+		data: trips,
+		isLoading,
+		isSuccess,
+		isFetching,
+		error,
+	} = useGetTripsQuery();
+	console.log("TRIPS", trips);
+	console.log("error", error);
+
 	const navigation = useNavigation();
 
 	// const trips = [
@@ -50,7 +59,7 @@ const TripsScreen = () => {
 	};
 
 	useEffect(() => {
-		handleFetch();
+		// handleFetch();
 	}, []);
 
 	const keyExtractor = (item, index) => index.toString();
@@ -61,6 +70,12 @@ const TripsScreen = () => {
 
 		navigation.navigate("TripDetails", { destination: itemPressed });
 	};
+
+	useEffect(() => {
+		if (isSuccess && trips.length) {
+			dispatch(setTrips(trips));
+		}
+	}, [isFetching]);
 
 	return (
 		<SafeAreaView style={styles.container}>

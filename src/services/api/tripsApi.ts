@@ -3,8 +3,8 @@ import { api, config } from "../index";
 interface Trip {
 	origin: string;
 	destination: string;
-	departureDate: Date;
-	returnDate: Date;
+	departure_date: Date;
+	return_date: Date;
 	airline: string;
 }
 
@@ -15,7 +15,6 @@ export const tripsApi = api.injectEndpoints({
 		getTrips: builder.query<Trips, void>({
 			query: () => ({
 				url: "/api/trips",
-				// headers: config.headers,
 			}),
 			transformResponse: (response: { data: Trips }, meta, arg) =>
 				response.data,
@@ -26,14 +25,12 @@ export const tripsApi = api.injectEndpoints({
 				url: "/api/trips",
 				method: "POST",
 				body: payload,
-				// headers: config.headers,
 			}),
 		}),
 
 		getTripById: builder.query<Trip, void>({
 			query: (id) => ({
 				url: `/api/trips/${id}`,
-				// headers: config.headers,
 			}),
 		}),
 
@@ -42,7 +39,6 @@ export const tripsApi = api.injectEndpoints({
 				url: `/api/trips/${id}`,
 				method: "PATCH",
 				body: patch,
-				// headers: config.headers,
 			}),
 		}),
 
@@ -50,7 +46,6 @@ export const tripsApi = api.injectEndpoints({
 			query: (id) => ({
 				url: `/api/trips/${id}`,
 				method: "DELETE",
-				// headers: config.headers,
 			}),
 		}),
 	}),

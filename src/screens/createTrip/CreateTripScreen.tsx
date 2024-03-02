@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, View, ScrollView } from "react-native";
 import { styles } from "./styles";
-import { Button, Input } from "@rneui/themed";
-import TopNavigation from "../../components/TopNavigation";
 import { Icon } from "@rneui/themed";
 import { HomeStackProps } from "../../navigation/types";
 import moment from "moment";
 import InputGroupContainer from "./form/InputGroup";
 import CustomButton from "../../components/buttons/CustomButton";
-import DateButton from "./form/DateButton";
+import DateButton from "./form/DateButtonGroup";
+import { useCreateTripMutation } from "../../services/api/tripsApi";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+	selectNewTripDraft,
+	resetTripDraft,
+	addNewTrip,
+} from "../../features/tripsSlice";
+import { logout } from "../../features/authSlice";
 
 const PlaneTakeoffIcon = () => (
 	<Icon name="airplane-takeoff" type="material-community" />
@@ -18,33 +24,44 @@ const PlaneLandingIcon = () => (
 	<Icon name="airplane-landing" type="material-community" />
 );
 
+function formatDate(date: any) {
+	return moment(date).format("ddd, MMM DD");
+}
+
 const CreateTripScreen = ({ navigation }: HomeStackProps) => {
+	const newTripDraft = useAppSelector(selectNewTripDraft);
+	console.log(newTripDraft);
 	const [createTrip, reuslt] = useCreateTripMutation();
+	const [lastEdited, setLastEdited] = useState<any>("");
 	const [isLoading, setIsLoading] = useState(false);
+	const dispatch = useAppDispatch();
+
 	const [state, setState] = useState({
 		origin: "",
 		destination: "",
-		departureDate: moment().format("ddd, MMM DD"),
-		returnDate: moment().add(3, "days").format("ddd, MMM DD"),
+		departure_date: formatDate(moment()),
+		return_date: moment().add(3, "days").format("ddd, MMM DD"),
 		airline: "",
 	});
 
-	const clearInputs = () => {
+	console.log("state ", state);
+
+	const resetState = () => {
 		setState({
 			origin: "",
 			destination: "",
-			departureDate: moment().format("ddd, MM DD"),
-			returnDate: moment().format("ddd, MM DD"),
+			departure_date: formatDate(moment()),
+			return_date: moment().add(3, "days").format("ddd, MMM DD"),
 			airline: "",
 		});
 	};
 
-	const handleBlur = (e) => {
-		console.error(lastEdited);
-		// dispatch(addNewTrip({type: }))
+	const handleBlur = () => {
+		const item = { [lastEdited]: state[lastEdited] };
+		dispatch(addNewTrip(item));
 	};
 
-	const handleChange = (text, name) => {
+	const handleChange = (text: string, name: string) => {
 		setState({ ...state, [name]: text });
 		setLastEdited(name);
 	};
@@ -54,20 +71,44 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 
 		try {
 			const { data } = await createTrip(state).unwrap();
+			console.error("New Trip created", data);
 
 			if (data.success) {
 				// handle adding new trip to trip list state
+				dispatch(resetTripDraft(undefined));
+				resetState();
+				navigation.goBack();
 			}
 		} catch (err) {
-			console.log(err);
-		}
+			console.error("ERROR", err);
 
-		try {
-			// clearInputs();
-		} catch (err) {
-			console.error(err);
+			if (err.data === "Forbidden") {
+				dispatch(logout());
+			}
 		}
 	};
+
+	useEffect(() => {
+		if (newTripDraft?.departure_date || newTripDraft?.return_date) {
+			let departureDate, returnDate;
+
+			if (newTripDraft?.departure_date) {
+				departureDate = formatDate(newTripDraft?.departure_date);
+			}
+
+			if (newTripDraft?.return_date) {
+				returnDate = formatDate(newTripDraft?.return_date);
+			}
+
+			setState({
+				...state,
+				...(newTripDraft?.departure_date && {
+					departure_date: departureDate,
+				}),
+				...(newTripDraft?.return_date && { return_date: returnDate }),
+			});
+		}
+	}, [newTripDraft]);
 
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -98,13 +139,13 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 					<View style={styles.dateInputWrapper}>
 						<DateButton
 							label="From"
-							title={state.departureDate}
-							type="departure"
+							date={state.departure_date}
+							fieldName="departure_date"
 						/>
 						<DateButton
 							label="To"
-							title={state.returnDate}
-							type="return"
+							date={state.return_date}
+							fieldName="return_date"
 						/>
 					</View>
 				</View>
