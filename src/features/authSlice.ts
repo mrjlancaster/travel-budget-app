@@ -51,7 +51,6 @@ const authSlice = createSlice({
 		initializeFromToken: (state, action) => {
 			const accessToken = action.payload;
 			const decoded = jwtDecode<JwtPayload>(accessToken);
-			console.log("init from token decoded => ", decoded);
 
 			state.user = decoded.user;
 			state.isAuthenticated = decoded.isAuthenticated;

@@ -36,7 +36,7 @@ export const authApi = api.injectEndpoints({
 			query: (token) => ({
 				url: "/api/auth/refresh",
 				method: "POST",
-				body: token,
+				body: { refreshToken: token },
 			}),
 		}),
 	}),
