@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Card, Title } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const TravelCard = ({ destination }) => {
 	const navigation = useNavigation();
@@ -23,6 +24,9 @@ const TravelCard = ({ destination }) => {
 				title="Playa Del Carmen, Mexico"
 				titleStyle={styles.title}
 			/>
+			<View>
+				<Icon name="location-sharp" size={24} />
+			</View>
 		</Card>
 	);
 };

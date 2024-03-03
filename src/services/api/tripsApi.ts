@@ -16,8 +16,9 @@ export const tripsApi = api.injectEndpoints({
 			query: () => ({
 				url: "/api/trips",
 			}),
-			transformResponse: (response: { data: Trips }, meta, arg) =>
-				response.data,
+			transformResponse: (response: { data: Trips }, meta, arg) => {
+				return response.data;
+			},
 		}),
 
 		createTrip: builder.mutation({

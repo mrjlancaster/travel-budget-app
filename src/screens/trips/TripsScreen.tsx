@@ -24,7 +24,7 @@ const TripsScreen = () => {
 		error,
 	} = useGetTripsQuery();
 	console.log("TRIPS", trips);
-	console.log("error", error);
+	console.error("error", error);
 
 	const navigation = useNavigation();
 

@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { selectAuth, selectUser } from "../features/authSlice";
+import { logout, selectAuth, selectUser } from "../features/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeFromToken } from "../features/authSlice";
 import AuthStack from "./AuthStack";
 import SplashScreen from "../screens/SplashScreen";
 import BottomNav from "./BottomNav";
 import { useAppSelector, useAppDispatch } from "../hooks";
+import jwtDecode from "jwt-decode";
+import moment from "moment";
+import { getAccessToken, getRefreshToken } from "../utils";
 
 const Root = () => {
 	const { isAuthenticated } = useAppSelector(selectAuth);
@@ -18,10 +21,18 @@ const Root = () => {
 		setLoading(true);
 
 		const verifyUser = async () => {
-			const token = await AsyncStorage.getItem("accessToken");
+			const token = await getAccessToken();
 
 			if (token) {
-				dispatch(initializeFromToken(token));
+				const decoded: { exp: number } = jwtDecode(token);
+				const expiration: any = decoded.exp * 1000;
+				const refreshToken = await getRefreshToken();
+
+				if (expiration < moment() && !refreshToken) {
+					dispatch(logout());
+				} else {
+					dispatch(initializeFromToken(token));
+				}
 			}
 		};
 

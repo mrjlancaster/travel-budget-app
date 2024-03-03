@@ -1,13 +1,18 @@
 import { api, config } from "../index";
 
+interface Credentials {
+	email: string;
+	password: string;
+}
+
 export const authApi = api.injectEndpoints({
 	endpoints: (build) => ({
 		login: build.mutation({
-			query: (data) => ({
+			query: (credentials) => ({
 				url: "/api/auth/login",
 				method: "POST",
-				body: data,
-				headers: config.headers,
+				body: credentials,
+				// headers: config.headers,
 			}),
 		}),
 
@@ -19,14 +24,26 @@ export const authApi = api.injectEndpoints({
 			}),
 		}),
 
-		refreshToken: build.query({
+		verify: build.mutation({
 			query: () => ({
+				url: "/api/auth/verify",
+				method: "POST",
+				body: "",
+			}),
+		}),
+
+		refreshToken: build.mutation({
+			query: (token) => ({
 				url: "/api/auth/refresh",
-				headers: config.headers,
+				method: "POST",
+				body: token,
 			}),
 		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation, useRefreshTokenQuery } =
-	authApi;
+export const {
+	useLoginMutation,
+	useRegisterMutation,
+	useRefreshTokenMutation,
+} = authApi;
