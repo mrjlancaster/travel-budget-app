@@ -3,6 +3,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 export type BottomNavStackParamList = {
 	Home: undefined;
 	Trips: undefined;
+	TsaPreCheck: undefined;
 	Account: undefined;
 };
 
@@ -18,12 +19,28 @@ export type AuthStack = {
 
 export type AuthStackProps = NativeStackScreenProps<AuthStack>;
 
+type TripDetail = {
+	details: {
+		origin: null | string;
+		destination: null | string;
+		departure_date: null | string | Date;
+		return_date: null | string | Date;
+		airline: null | string;
+	};
+};
+
 export type HomeStackParamList = {
 	HomeScreen: undefined;
-	TripDetails: undefined;
+	TripDetails: TripDetail;
 	SearchModal: undefined;
 	NewTrip: undefined;
-	DatePickerModal: undefined;
+	DatePickerModal: { fieldName: string } | undefined;
 };
 
 export type HomeStackProps = NativeStackScreenProps<HomeStackParamList>;
+
+// declare global {
+// 	namespace ReactNavigation {
+// 		interface RootParam
+// 	}
+// }

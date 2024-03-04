@@ -30,7 +30,7 @@ function formatDate(date: any) {
 
 const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 	const newTripDraft = useAppSelector(selectNewTripDraft);
-	console.log(newTripDraft);
+	console.log("DRAFT => ", newTripDraft);
 	const [createTrip, reuslt] = useCreateTripMutation();
 	const [lastEdited, setLastEdited] = useState<any>("");
 	const [isLoading, setIsLoading] = useState(false);
@@ -69,11 +69,17 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 	const handleSubmit = async () => {
 		setIsLoading(true);
 
-		try {
-			const { data } = await createTrip(state).unwrap();
-			console.error("New Trip created", data);
+		const payload = {
+			...state,
+			departure_date: new Date(newTripDraft.departure_date),
+			return_date: new Date(newTripDraft.return_date),
+		};
 
-			if (data.success) {
+		try {
+			const response = await createTrip(payload).unwrap();
+			console.error("New Trip created", response);
+
+			if (response.success) {
 				// handle adding new trip to trip list state
 				dispatch(resetTripDraft(undefined));
 				resetState();

@@ -3,15 +3,16 @@ import Icon from "react-native-vector-icons/Entypo";
 import { HomeStackProps } from "../../navigation/types";
 
 const TripDetailScreen = ({ route, navigation }: HomeStackProps) => {
-	const { destination } = route.params;
+	const { details } = route.params;
+	console.log("DETAILS ", details);
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<View>
 				<View style={styles.tripDetailsContainer}>
 					<View style={styles.tripTitleContainer}>
-						<Text style={styles.detailTitle}>{destination.city}</Text>
-						<Text style={styles.country}>{destination.country}</Text>
+						{/* <Text style={styles.detailTitle}>{destination.city}</Text>
+						<Text style={styles.country}>{destination.country}</Text> */}
 					</View>
 				</View>
 			</View>

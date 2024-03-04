@@ -8,12 +8,15 @@ import { fetchDestinationCardBg } from "../../api/pexelsApi";
 import NoTripsView from "./NoTripsView";
 import { useGetTripsQuery } from "../../services/api/tripsApi";
 import Loading from "../../components/Loading";
-import { useAppDispatch } from "../../hooks";
-import { setTrips } from "../../features/tripsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { setTrips, selectTrips } from "../../features/tripsSlice";
+import List from "./List";
 
 const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
+	const { trips: myTrips } = useAppSelector(selectTrips);
+	console.log("MY TRIPS", myTrips);
 	const dispatch = useAppDispatch();
 	const [cardBackground, setCardBackground] = useState<null | string>(null);
 	const {
@@ -62,17 +65,9 @@ const TripsScreen = () => {
 		// handleFetch();
 	}, []);
 
-	const keyExtractor = (item, index) => index.toString();
-
-	const handleClick = (id) => {
-		const itemPressed = trips.find((trip) => trip.id === id);
-		console.log(itemPressed);
-
-		navigation.navigate("TripDetails", { destination: itemPressed });
-	};
-
 	useEffect(() => {
 		if (isSuccess && trips.length) {
+			console.error("TRIPS ", trips);
 			dispatch(setTrips(trips));
 		}
 	}, [isFetching]);
@@ -80,17 +75,14 @@ const TripsScreen = () => {
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text style={styles.screenTitle}>My Trips</Text>
+
 			{isLoading ? (
 				<Loading />
 			) : !trips || !trips.length ? (
 				<NoTripsView />
 			) : (
-				<View>
-					<Text></Text>
-				</View>
+				<List />
 			)}
-
-			{/* <TopNavigation title={`${trips.length} Trips`} /> */}
 		</SafeAreaView>
 	);
 };

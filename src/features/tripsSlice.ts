@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 interface Trip {
+	id: number;
 	origin: null | string;
 	destination: null | string;
 	departure_date: null | string | Date;
@@ -52,7 +53,7 @@ const tripsSlice = createSlice({
 
 export const { setTrips, addNewTrip, resetTripDraft } = tripsSlice.actions;
 
-export const selectTrips = (state: RootState) => state.trips.trips;
+export const selectTrips = (state: RootState) => state.trips;
 export const selectNewTripDraft = (state: RootState) =>
 	state.trips.newTripDraft;
 

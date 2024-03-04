@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Calendar } from "react-native-calendars";
 import CustomButton from "../../components/buttons/CustomButton";
 import { HomeStackProps } from "../../navigation/types";
 import moment from "moment";
-import { addNewTrip } from "../../features/tripsSlice";
-import { useAppDispatch } from "../../hooks";
+import { addNewTrip, selectNewTripDraft } from "../../features/tripsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 const DEFAULT_SELECTED_COLOR = "#00BBF2";
 
@@ -14,9 +14,11 @@ const INITIAL_STATE = {
 };
 
 const DatepickerModal = ({ navigation, route }: HomeStackProps) => {
-	const [state, setState] = useState(INITIAL_STATE);
-	const [selectedDate, setSelectedDate] = useState(null);
-	const { fieldName } = route.params;
+	const [state, setState] = useState<any>(INITIAL_STATE);
+	const draft = useAppSelector(selectNewTripDraft);
+
+	const [selectedDate, setSelectedDate] = useState<string | null>(null);
+	const { fieldName }: any = route.params;
 	const dispatch = useAppDispatch();
 
 	const handleChange = (day) => {
@@ -30,6 +32,24 @@ const DatepickerModal = ({ navigation, route }: HomeStackProps) => {
 		dispatch(addNewTrip(payload));
 		navigation.goBack();
 	};
+
+	useEffect(() => {
+		let date: any;
+
+		if (fieldName === "departure_date") {
+			if (draft?.departure_date !== null) {
+				date = draft?.departure_date;
+				setState({ [date]: { selected: true } });
+			}
+		}
+
+		if (fieldName === "return_date") {
+			if (draft?.return_date) {
+				date = draft?.return_date;
+				setState({ [date]: { selected: true } });
+			}
+		}
+	}, []);
 
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>

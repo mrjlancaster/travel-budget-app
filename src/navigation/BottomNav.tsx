@@ -5,6 +5,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import ProfileStack from "./ProfileStack";
 import HomeStack from "./HomeStack";
 import TripsStack from "./TripsStack";
+import TsaPreCheckScreen from "../screens/tsaPreCheck/TsaPreCheckScreen";
 import { BottomNavStackParamList } from "./types";
 
 const Tab = createBottomTabNavigator<BottomNavStackParamList>();
@@ -43,6 +44,11 @@ const BottomNav = () => {
 				component={TripsStack}
 				options={{ tabBarIcon: tripsTabIcon }}
 			/>
+			{/* <Tab.Screen
+				name="TsaPreCheck"
+				component={TsaPreCheckScreen}
+				options={{ tabBarIcon: tripsTabIcon, tabBarLabel: "Pre Check" }}
+			/> */}
 			<Tab.Screen
 				name="Account"
 				component={ProfileStack}
