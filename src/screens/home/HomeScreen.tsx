@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../features/authSlice";
 import Searchbar from "../../components/searchbar/Searchbar";
 import { HomeProps, HomeScreenProps } from "../../navigation/types";
+import { getAccessToken } from "../../utils";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
 	const { user, isAuthenticated } = useSelector(selectUser);

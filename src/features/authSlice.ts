@@ -1,14 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RootState } from "../app/store";
 import jwtDecode from "jwt-decode";
+import { clearStorage, saveInStorage } from "../utils";
 
-async function saveToken(key: string, value: string) {
-	await AsyncStorage.setItem(key, value);
-}
-
-async function removeItem(key: string) {
-	await AsyncStorage.removeItem(key);
+async function saveToken(key: string, token: string) {
+	await saveInStorage(key, token);
 }
 
 interface User {
@@ -57,9 +53,7 @@ const authSlice = createSlice({
 		},
 
 		logout: () => {
-			removeItem("accessToken");
-			removeItem("refreshToken");
-
+			clearStorage();
 			return initialState;
 		},
 	},

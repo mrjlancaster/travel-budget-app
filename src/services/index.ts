@@ -6,7 +6,7 @@ import type {
 } from "@reduxjs/toolkit/query";
 import { initializeFromToken, logout } from "../features/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getRefreshToken } from "../utils";
+import { getAccessToken, getRefreshToken, saveInStorage } from "../utils";
 import { API_URL } from "@env";
 
 const baseUrl = API_URL;
@@ -14,7 +14,7 @@ const baseQuery = fetchBaseQuery({
 	baseUrl,
 	credentials: "include",
 	prepareHeaders: async (headers, { endpoint }) => {
-		const token = await AsyncStorage.getItem("accessToken");
+		const token = await getAccessToken();
 
 		if (token && endpoint !== "refresh") {
 			headers.set("authorization", `Bearer ${token}`);
@@ -60,8 +60,8 @@ const baseQueryWithReauth: BaseQueryFn<
 		);
 
 		if (data?.success) {
-			console.error("ACCESS TOKEN", data.data.accessToken);
-			await AsyncStorage.setItem("accessToken", data.data.accessToken);
+			console.error("ACCESS TOKEN IN SERVICES", data.data.accessToken);
+			await saveInStorage("accessToken", data.data.accessToken);
 			// store the new token
 			api.dispatch(initializeFromToken(data.data));
 			// retry the initial query

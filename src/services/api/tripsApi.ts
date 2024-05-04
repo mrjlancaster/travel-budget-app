@@ -14,7 +14,7 @@ export const tripsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getTrips: builder.query<Trips, void>({
 			query: () => ({
-				url: "/api/trips",
+				url: "/trips",
 			}),
 			transformResponse: (response: { data: Trips }, meta, arg) => {
 				return response.data;
@@ -23,7 +23,7 @@ export const tripsApi = api.injectEndpoints({
 
 		createTrip: builder.mutation({
 			query: (payload) => ({
-				url: "/api/trips",
+				url: "/trips",
 				method: "POST",
 				body: payload,
 			}),
@@ -31,13 +31,13 @@ export const tripsApi = api.injectEndpoints({
 
 		getTripById: builder.query<Trip, void>({
 			query: (id) => ({
-				url: `/api/trips/${id}`,
+				url: `/trips/${id}`,
 			}),
 		}),
 
 		updateTrip: builder.mutation({
 			query: ({ id, ...patch }) => ({
-				url: `/api/trips/${id}`,
+				url: `/trips/${id}`,
 				method: "PATCH",
 				body: patch,
 			}),
@@ -45,7 +45,7 @@ export const tripsApi = api.injectEndpoints({
 
 		deleteTrip: builder.mutation({
 			query: (id) => ({
-				url: `/api/trips/${id}`,
+				url: `/trips/${id}`,
 				method: "DELETE",
 			}),
 		}),
