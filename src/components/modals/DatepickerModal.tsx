@@ -5,7 +5,7 @@ import CustomButton from "../../components/buttons/CustomButton";
 import { HomeStackProps } from "../../navigation/types";
 import moment from "moment";
 import { addNewTrip, selectNewTripDraft } from "../../features/tripsSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const DEFAULT_SELECTED_COLOR = "#00BBF2";
 

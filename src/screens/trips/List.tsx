@@ -1,10 +1,11 @@
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../app/hooks";
 import { selectTrips } from "../../features/tripsSlice";
 import { Card } from "react-native-paper";
 import NoTripsView from "./NoTripsView";
+import moment from "moment";
 
 type Trip = {
 	id: number;
@@ -21,6 +22,7 @@ type ItemProps = {
 
 const Item = ({ details }: ItemProps) => {
 	const navigation = useNavigation();
+	console.log(details.departure_date);
 
 	const handlePress = () => {
 		navigation.navigate("TripDetails", { details: details });
@@ -38,7 +40,12 @@ const Item = ({ details }: ItemProps) => {
 				title={details.origin + " to " + details.destination}
 				titleStyle={styles.title}
 			/>
-			<View></View>
+			<Card.Content>
+				<Text>
+					{moment(details.departure_date).format("MMM Do, YYYY")} -{" "}
+					{moment(details.return_date).format("MMM Do, YYYY")}
+				</Text>
+			</Card.Content>
 		</Card>
 	);
 };

@@ -8,12 +8,12 @@ import {
 	Text,
 } from "react-native";
 import TopNavigation from "../../components/TopNavigation";
-import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "@rneui/themed";
 import { useEffect } from "react";
 import { apiInstance } from "../../api/axios";
 import { logout, selectUser } from "../../features/authSlice";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const ListItem = ({ label, action }) => {
 	return (
@@ -25,8 +25,8 @@ const ListItem = ({ label, action }) => {
 };
 
 const ProfileScreen = ({ navigation }) => {
-	const { user } = useSelector(selectUser);
-	const dispatch = useDispatch();
+	const { user } = useAppSelector(selectUser);
+	const dispatch = useAppDispatch();
 
 	const DATA = [
 		{

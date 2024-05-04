@@ -8,7 +8,7 @@ import { fetchDestinationCardBg } from "../../api/pexelsApi";
 import NoTripsView from "./NoTripsView";
 import { useGetTripsQuery } from "../../services/api/tripsApi";
 import Loading from "../../components/Loading";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setTrips, selectTrips } from "../../features/tripsSlice";
 import List from "./List";
 

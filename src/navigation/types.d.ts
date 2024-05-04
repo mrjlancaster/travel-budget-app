@@ -1,5 +1,30 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
+// Auth screens Types
+export type AuthStackParamList = {
+	Login: undefined;
+	Register: undefined;
+	ForgotPassword: undefined;
+	ResetPassword: undefined;
+};
+
+export type LoginProps = NativeStackScreenProps<AuthStackParamList, "Login">;
+export type RegisterProps = NativeStackScreenProps<
+	AuthStackParamList,
+	"Register"
+>;
+export type ForgotPasswordProps = NativeStackScreenProps<
+	AuthStackParamList,
+	"ForgotPassword"
+>;
+export type ResetPasswordProps = NativeStackScreenProps<
+	AuthStackParamList,
+	"ResetPassword"
+>;
+//--------- end --------------//
+
+// Bottom nav types
 export type BottomNavStackParamList = {
 	Home: undefined;
 	Trips: undefined;
@@ -7,17 +32,18 @@ export type BottomNavStackParamList = {
 	Account: undefined;
 };
 
-export type BottomNavStackProps =
-	NativeStackScreenProps<BottomNavStackParamList>;
+export type HomeProps = BottomTabScreenProps<BottomNavStackParamList, "Home">;
+export type TripsProps = BottomTabScreenProps<BottomNavStackParamList, "Trips">;
+export type TsaPreCheckProps = BottomTabScreenProps<
+	BottomNavStackParamList,
+	"TsaPreCheck"
+>;
+export type AccountProps = BottomTabScreenProps<
+	BottomNavStackParamList,
+	"Account"
+>;
 
-export type AuthStack = {
-	Login: undefined;
-	Register: undefined;
-	ForgotPassword: undefined;
-	ResetPassword: undefined;
-};
-
-export type AuthStackProps = NativeStackScreenProps<AuthStack>;
+// --------- end ------------//
 
 type TripDetail = {
 	details: {
@@ -36,6 +62,11 @@ export type HomeStackParamList = {
 	NewTrip: undefined;
 	DatePickerModal: { fieldName: string } | undefined;
 };
+
+export type HomeScreenProps = NativeStackScreenProps<
+	HomeStackParamList,
+	"HomeScreen"
+>;
 
 export type HomeStackProps = NativeStackScreenProps<HomeStackParamList>;
 

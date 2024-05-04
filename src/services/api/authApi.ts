@@ -9,7 +9,7 @@ export const authApi = api.injectEndpoints({
 	endpoints: (build) => ({
 		login: build.mutation({
 			query: (credentials) => ({
-				url: "/api/auth/login",
+				url: "/auth/login",
 				method: "POST",
 				body: credentials,
 				// headers: config.headers,
@@ -18,23 +18,22 @@ export const authApi = api.injectEndpoints({
 
 		register: build.mutation({
 			query: (data) => ({
-				url: "/api/auth/register",
+				url: "/auth/register",
 				method: "POST",
 				body: data,
 			}),
 		}),
 
-		verify: build.mutation({
+		useVerifyAuthMutation: build.mutation({
 			query: () => ({
-				url: "/api/auth/verify",
-				method: "POST",
-				body: "",
+				url: "/auth/token/verify",
+				method: "GET",
 			}),
 		}),
 
 		refreshToken: build.mutation({
 			query: (token) => ({
-				url: "/api/auth/refresh",
+				url: "/auth/refresh",
 				method: "POST",
 				body: { refreshToken: token },
 			}),
@@ -45,5 +44,6 @@ export const authApi = api.injectEndpoints({
 export const {
 	useLoginMutation,
 	useRegisterMutation,
+	useVerifyAuthMutation,
 	useRefreshTokenMutation,
 } = authApi;

@@ -7,8 +7,9 @@ import type {
 import { initializeFromToken, logout } from "../features/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getRefreshToken } from "../utils";
+import { API_URL } from "@env";
 
-const baseUrl = "http://localhost:8000";
+const baseUrl = API_URL;
 const baseQuery = fetchBaseQuery({
 	baseUrl,
 	credentials: "include",
@@ -36,6 +37,7 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
 	let result = await baseQuery(args, api, extraOptions);
 	const statusCode = result.error?.status;
+	console.error("STATUS CODE", statusCode);
 	const isUnauthenticated = statusCode === 401 || statusCode === 403;
 	console.log("RESULTS", result);
 
@@ -43,7 +45,7 @@ const baseQueryWithReauth: BaseQueryFn<
 		const refreshToken = await getRefreshToken();
 		// try to get a new token
 		const options = {
-			url: "/api/auth/refresh",
+			url: "/auth/refresh",
 			method: "POST",
 			body: { refreshToken },
 		};

@@ -7,57 +7,66 @@ import {
 	selectUser,
 	setCredentials,
 } from "../features/authSlice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeFromToken } from "../features/authSlice";
 import AuthStack from "./AuthStack";
 import SplashScreen from "../screens/SplashScreen";
 import BottomNav from "./BottomNav";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
-import { getAccessToken, getRefreshToken } from "../utils";
+import { getAccessToken } from "../utils";
 import { useRefreshTokenMutation } from "../services/api/authApi";
+import UserInactivityProvider from "../providers/UserInactivity";
+import { apiInstance } from "../api/axios";
+import axios, { AxiosResponse } from "axios";
 
 const Root = () => {
 	const { isAuthenticated } = useAppSelector(selectAuth);
-	const [loading, setLoading] = useState(false);
+	console.error("IS AUTH", isAuthenticated);
+	const [loading, setLoading] = useState(true);
 	const [handleRefresh, { isLoading }] = useRefreshTokenMutation();
 	const dispatch = useAppDispatch();
 
+	// const verifyAuth = async () => {
+	// 	try {
+	// 		const token = await getAccessToken();
+
+	// 		if (token) {
+	// 			const { data }: AxiosResponse = await apiInstance.get(
+	// 				"/auth/token/verify"
+	// 			);
+	// 			console.log("Response", data);
+	// 		}
+
+	// 		// if (token) {
+	// 		// 	const decoded: { exp: number } = jwtDecode(token);
+	// 		// 	const expiration: any = decoded.exp * 1000;
+	// 		// 	const currentDate = new Date();
+
+	// 		// 	console.log("TOKEN EXPIRATION ", expiration, currentDate.getTime());
+	// 		// 	console.log("CURRENT TIME", expiration < currentDate.getTime());
+
+	// 		// 	if (expiration < currentDate.getTime()) {
+	// 		// 		const { data } = await handleRefresh(refreshToken).unwrap();
+	// 		// 		console.log("REFRESHED TOKEN ON INIT ", data);
+	// 		// 		dispatch(setCredentials(data.data));
+	// 		// 	} else {
+	// 		// 		dispatch(initializeFromToken(token));
+	// 		// 	}
+	// 		// }
+	// 	} catch (err: any) {
+	// 		console.log(err);
+	// 		if (err.response) {
+	// 			const { message } = err.response.data;
+	// 			console.log(err.response.data);
+	// 		}
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// };
+
 	useEffect(() => {
-		setLoading(true);
-
-		const verifyUser = async () => {
-			const token = await getAccessToken();
-			const refreshToken = await getRefreshToken();
-
-			console.log("refresh token", refreshToken);
-
-			if (!refreshToken) {
-				dispatch(logout());
-				setLoading(false);
-				return;
-			}
-
-			if (token) {
-				const decoded: { exp: number } = jwtDecode(token);
-				const expiration: any = decoded.exp * 1000;
-				const currentDate = new Date();
-
-				console.log("TOKEN EXPIRATION ", expiration, currentDate.getTime());
-				console.log("CURRENT TIME", expiration < currentDate.getTime());
-
-				if (expiration < currentDate.getTime()) {
-					const { data } = await handleRefresh(refreshToken).unwrap();
-					console.log("REFRESHED TOKEN ON INIT ", data);
-					dispatch(setCredentials(data.data));
-				} else {
-					dispatch(initializeFromToken(token));
-				}
-			}
-		};
-
-		verifyUser();
+		// verifyAuth();
 		setLoading(false);
 	}, [isAuthenticated]);
 
@@ -71,7 +80,11 @@ const Root = () => {
 
 	// return <BottomNav />;
 
-	return isAuthenticated ? <BottomNav /> : <AuthStack />;
+	return (
+		<UserInactivityProvider>
+			{isAuthenticated ? <BottomNav /> : <AuthStack />}
+		</UserInactivityProvider>
+	);
 };
 
 export default Root;

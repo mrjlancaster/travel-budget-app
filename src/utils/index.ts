@@ -7,3 +7,7 @@ export const getAccessToken = async () => {
 export const getRefreshToken = async () => {
 	return await AsyncStorage.getItem("refreshToken");
 };
+
+export const clearStorage = async () => {
+	await AsyncStorage.clear();
+};

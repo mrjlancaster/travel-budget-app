@@ -7,9 +7,9 @@ import SearchBox from "../../components/searchbar/SearchBox";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/authSlice";
 import Searchbar from "../../components/searchbar/Searchbar";
-import { HomeStackProps } from "../../navigation/types";
+import { HomeProps, HomeScreenProps } from "../../navigation/types";
 
-const HomeScreen = ({ navigation }: HomeStackProps) => {
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
 	const { user, isAuthenticated } = useSelector(selectUser);
 	const [searchQuery, setSearchQuery] = useState("");
 

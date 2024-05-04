@@ -17,7 +17,7 @@ import { setCredentials } from "../../../features/authSlice";
 import { Button, Input } from "@rneui/themed";
 import { Formik } from "formik";
 import BACKGROUND_IMAGE from "../../../../assets/background.jpg";
-import { AuthStackProps } from "../../../navigation/types";
+import { RegisterProps } from "../../../navigation/types";
 import { useRegisterMutation } from "../../../services/api/authApi";
 
 type ValuesProps = {
@@ -54,7 +54,7 @@ function validate(values: ValuesProps) {
 	return errors;
 }
 
-const RegisterScreen = ({ navigation }: AuthStackProps) => {
+const RegisterScreen = ({ navigation }: RegisterProps) => {
 	const [register, { isLoading }] = useRegisterMutation();
 	const dispatch = useDispatch();
 	const [isPasswordShown, setIsPasswordShown] = useState(false);

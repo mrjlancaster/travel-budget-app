@@ -1,13 +1,11 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { refreshToken } from "./authApi";
-import { BASE_URL } from "@env";
-
-const baseURL = BASE_URL;
+import { API_URL } from "@env";
+import { clearStorage, getRefreshToken } from "../utils";
 
 export const apiInstance = axios.create({
-	baseURL,
+	baseURL: API_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -16,8 +14,6 @@ export const apiInstance = axios.create({
 apiInstance.interceptors.request.use(
 	async (config) => {
 		const token = await AsyncStorage.getItem("accessToken");
-		const decoded = jwtDecode(token);
-
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
 		}
@@ -35,15 +31,16 @@ apiInstance.interceptors.response.use(
 		return response;
 	},
 	async function (error) {
-		const refreshKey = await AsyncStorage.getItem("refreshToken");
-		console.error("Error code", error.response.status);
+		const refreshToken = await getRefreshToken();
+		console.log("REFRESH TOKEN ?", refreshToken);
+		console.error("Error code", error?.response?.status);
 
-		if (error.response.status === 403 && !refreshKey) {
-			await AsyncStorage.clear();
+		if (!refreshToken) {
+			await clearStorage();
 		}
 
 		if (error?.response?.status === 403) {
-			const newTokens = await refreshToken();
+			// const newTokens = await refreshToken();
 		}
 		// const statusCode = err?.response?.status;
 

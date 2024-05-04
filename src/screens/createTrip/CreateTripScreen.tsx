@@ -8,7 +8,7 @@ import InputGroupContainer from "./form/InputGroup";
 import CustomButton from "../../components/buttons/CustomButton";
 import DateButton from "./form/DateButtonGroup";
 import { useCreateTripMutation } from "../../services/api/tripsApi";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
 	selectNewTripDraft,
 	resetTripDraft,

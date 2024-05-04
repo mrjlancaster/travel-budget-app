@@ -18,7 +18,7 @@ import { setCredentials } from "../../../features/authSlice";
 import { Formik } from "formik";
 import { Button, Input } from "@rneui/themed";
 import BACKGROUND_IMAGE from "../../../../assets/background.jpg";
-import { AuthStackProps } from "../../../navigation/types";
+import { LoginProps } from "../../../navigation/types";
 import { useLoginMutation } from "../../../services/api/authApi";
 
 type ValuesProp = {
@@ -49,7 +49,7 @@ function validate(values: ValuesProp) {
 	return errors;
 }
 
-const LoginScreen = ({ navigation }: AuthStackProps) => {
+const LoginScreen = ({ navigation }: LoginProps) => {
 	const [login, { isLoading }] = useLoginMutation();
 	const dispatch = useDispatch();
 	const initialLoginValues = { email: "", password: "" };
@@ -58,24 +58,26 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
 	const handleLogin = async (values: ValuesProp, actions) => {
 		try {
 			const response = await login(values).unwrap();
-			console.log("Login Response => ", response);
+			console.error("Login Response => ", response);
 
 			if (response.success === 1) {
 				dispatch(setCredentials(response.data));
 				actions.resetForm();
 			}
-		} catch (err) {
+		} catch (err: any) {
 			console.log(err);
-			const errorMessage = err.data.message;
-			Alert.alert("Login Error", errorMessage);
+			if (err.response) {
+				const { message } = err.response.data;
+				Alert.alert("Login Error", message);
 
-			if (errorMessage.includes("Password" || "password")) {
-				// actions.setErrors({ email: "", password: errorMessage });
-				// actions.resetForm();
-			}
+				if (message.includes("Password" || "password")) {
+					// actions.setErrors({ email: "", password: errorMessage });
+					// actions.resetForm();
+				}
 
-			if (errorMessage.includes("email" || "Email")) {
-				// actions.setErrors({ email: errorMessage, password: "" });
+				if (message.includes("email" || "Email")) {
+					// actions.setErrors({ email: errorMessage, password: "" });
+				}
 			}
 		}
 	};

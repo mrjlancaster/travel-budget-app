@@ -14,7 +14,7 @@ async function checkDeviceSensors() {
 	// on Android you can check if has any fingersprints enrolled
 	const hasAnyFingerprintsEnrolled = await SInfo.hasEnrolledFingerprints();
 
-	const savingFirstData = await SInfo.setItem("sensor", hasAnySensors, {});
+	// const savingFirstData = await SInfo.setItem("sensor", hasAnySensors, {});
 }
 
 function App(): JSX.Element {
@@ -32,6 +32,7 @@ function App(): JSX.Element {
 						barStyle={isDarkMode ? "light-content" : "dark-content"}
 						// backgroundColor={backgroundStyle.backgroundColor}
 					/>
+
 					<Root />
 				</NavigationContainer>
 			</SafeAreaProvider>
