@@ -2,7 +2,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
 
@@ -77,3 +77,43 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+## Custom Card Component styles
+
+```
+Example one:
+
+card: {
+   borderRadius: 12,
+   backgroundColor: 'white',
+   marginBottom: 24,
+   shadowColor: '#000',
+   shadowOffset: {
+   width: 0,
+   height: 2,
+   },
+   shadowOpacity: 0.23,
+   shadowRadius: 2.62,
+   elevation: 4,
+}
+
+Example two:
+
+card: {
+   backgroundColor: "white",
+   borderRadius: 15,
+   padding: 16,
+   shadowColor: "black",
+   shadowOffset: {
+      width: 0,
+      height: 4,
+   },
+   shadowOpacity: 0.3,
+   shadowRadius: 6,
+   elevation: 14,
+   width: 350,
+   height: 350,
+   justifyContent: "center",
+   alignItems: "center",
+}
+```

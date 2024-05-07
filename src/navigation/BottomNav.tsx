@@ -7,6 +7,7 @@ import HomeStack from "./HomeStack";
 import TripsStack from "./TripsStack";
 import TsaPreCheckScreen from "../screens/tsaPreCheck/TsaPreCheckScreen";
 import { BottomNavStackParamList } from "./types";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 
 const Tab = createBottomTabNavigator<BottomNavStackParamList>();
 

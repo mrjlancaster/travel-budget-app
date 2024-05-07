@@ -14,6 +14,7 @@ import { apiInstance } from "../../api/axios";
 import { logout, selectUser } from "../../features/authSlice";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { ProfileScreenProps } from "../../navigation/types";
 
 const ListItem = ({ label, action }) => {
 	return (
@@ -24,7 +25,7 @@ const ListItem = ({ label, action }) => {
 	);
 };
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 	const { user } = useAppSelector(selectUser);
 	const dispatch = useAppDispatch();
 
@@ -59,9 +60,10 @@ const ProfileScreen = ({ navigation }) => {
 			}
 		};
 	}, []);
+
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<TopNavigation title="Profile" />
+		<SafeAreaView style={styles.container}>
+			<Text style={styles.screenTitle}>Profile</Text>
 			<FlatList
 				ListHeaderComponentStyle={styles.listHeader}
 				ListHeaderComponent={() => {
@@ -95,6 +97,12 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "#fff",
+	},
+	screenTitle: {
+		fontSize: 28,
+		marginTop: 10,
+		paddingHorizontal: 24,
 	},
 	heading: {
 		fontSize: 28,

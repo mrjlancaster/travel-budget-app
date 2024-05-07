@@ -6,6 +6,7 @@ import { store } from "./src/app/store";
 import { Provider } from "react-redux";
 import Root from "./src/navigation";
 import SInfo from "react-native-sensitive-info";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 async function checkDeviceSensors() {
 	// To check if any sensor is available on iOS/Android
@@ -28,12 +29,14 @@ function App(): JSX.Element {
 		<Provider store={store}>
 			<SafeAreaProvider>
 				<NavigationContainer>
-					<StatusBar
-						barStyle={isDarkMode ? "light-content" : "dark-content"}
-						// backgroundColor={backgroundStyle.backgroundColor}
-					/>
+					<GestureHandlerRootView style={{ flex: 1 }}>
+						<StatusBar
+							barStyle={isDarkMode ? "light-content" : "dark-content"}
+							// backgroundColor={backgroundStyle.backgroundColor}
+						/>
 
-					<Root />
+						<Root />
+					</GestureHandlerRootView>
 				</NavigationContainer>
 			</SafeAreaProvider>
 		</Provider>

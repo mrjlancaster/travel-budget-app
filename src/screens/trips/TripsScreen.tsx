@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, FlatList, SafeAreaView } from "react-native";
 import { styles } from "./styles";
@@ -15,6 +15,8 @@ import List from "./List";
 const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
+	const [skip, setSkip] = useState(true);
+	const [refreshing, setRefreshing] = useState(false);
 	const { trips: myTrips } = useAppSelector(selectTrips);
 	console.log("MY TRIPS", myTrips);
 	const dispatch = useAppDispatch();
@@ -25,7 +27,7 @@ const TripsScreen = () => {
 		isSuccess,
 		isFetching,
 		error,
-	} = useGetTripsQuery();
+	} = useGetTripsQuery({ skip: skip });
 	console.log("TRIPS", trips);
 	console.error("error", error);
 
@@ -51,18 +53,24 @@ const TripsScreen = () => {
 	// 	},
 	// ];
 
-	const handleFetch = async () => {
-		const queryStr = data[0].dest.split(" ").join("+");
-		const { photos } = await fetchDestinationCardBg(queryStr);
-		const randomIndex = Math.floor(Math.random() * photos.length);
+	// const handleFetch = async () => {
+	// 	const queryStr = data[0].dest.split(" ").join("+");
+	// 	const { photos } = await fetchDestinationCardBg(queryStr);
+	// 	const randomIndex = Math.floor(Math.random() * photos.length);
 
-		setCardBackground(photos[randomIndex].src.medium);
+	// 	setCardBackground(photos[randomIndex].src.medium);
 
-		console.warn(photos[randomIndex].src.medium);
-	};
+	// 	console.warn(photos[randomIndex].src.medium);
+	// };
 
 	useEffect(() => {
 		// handleFetch();
+	}, []);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		setSkip(false);
+		setRefreshing(false);
 	}, []);
 
 	useEffect(() => {
@@ -81,7 +89,7 @@ const TripsScreen = () => {
 			) : !trips || !trips.length ? (
 				<NoTripsView />
 			) : (
-				<List />
+				<List onRefresh={onRefresh} refreshing={refreshing} />
 			)}
 		</SafeAreaView>
 	);

@@ -20,9 +20,9 @@ export const styles = StyleSheet.create({
 	},
 	screenTitle: {
 		marginVertical: 20,
-		paddingHorizontal: 20,
-		fontWeight: "bold",
-		fontSize: 24,
+		paddingHorizontal: 24,
+		fontWeight: "500",
+		fontSize: 27,
 	},
 	image: {
 		height: 140,

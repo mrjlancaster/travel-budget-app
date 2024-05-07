@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View, Text } from "react-native";
+import { FlatList, StyleSheet, View, Text, RefreshControl } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
@@ -50,17 +50,25 @@ const Item = ({ details }: ItemProps) => {
 	);
 };
 
-const List = () => {
+type Props = {
+	onRefresh: () => void;
+	refreshing: boolean;
+};
+
+const List = ({ onRefresh, refreshing }: Props) => {
 	const { trips } = useAppSelector(selectTrips);
 	console.error("TRIPS LIST", trips);
 
 	return (
 		<FlatList
-			style={{ paddingHorizontal: 15 }}
+			style={{ paddingHorizontal: 24 }}
 			ListEmptyComponent={NoTripsView}
 			data={trips}
 			renderItem={({ item }) => <Item details={item} />}
 			keyExtractor={(item) => String(item.id)}
+			refreshControl={
+				<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+			}
 		>
 			<Text>List</Text>
 		</FlatList>
@@ -71,6 +79,7 @@ const styles = StyleSheet.create({
 	card: {
 		marginTop: 20,
 		borderRadius: 4,
+		backgroundColor: "#fff",
 	},
 	bgCover: {
 		borderTopLeftRadius: 4,

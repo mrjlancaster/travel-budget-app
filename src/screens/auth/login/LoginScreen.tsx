@@ -9,17 +9,18 @@ import {
 	Text,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
-	ImageBackground,
 	Alert,
+	TextInput,
 } from "react-native";
 import { styles } from "./login.styles";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../../features/authSlice";
 import { Formik } from "formik";
-import { Button, Input } from "@rneui/themed";
-import BACKGROUND_IMAGE from "../../../../assets/background.jpg";
+import { Button } from "@rneui/themed";
 import { LoginProps } from "../../../navigation/types";
 import { useLoginMutation } from "../../../services/api/authApi";
+import BackButton from "../../../components/BackButton";
+import MyInput from "../form/MyInput";
 
 type ValuesProp = {
 	email?: string;
@@ -83,19 +84,16 @@ const LoginScreen = ({ navigation }: LoginProps) => {
 	};
 
 	return (
-		<ImageBackground
-			source={BACKGROUND_IMAGE}
-			resizeMode="cover"
-			style={{ flex: 1, justifyContent: "center" }}
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={{ flex: 1 }}
+			keyboardVerticalOffset={-200}
 		>
-			<KeyboardAvoidingView
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-				style={{ flex: 1 }}
-				keyboardVerticalOffset={60}
-			>
-				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-					{/* <ScrollView contentContainerStyle={styles.scrollView}> */}
-					<SafeAreaView style={styles.scrollView}>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				{/* <ScrollView contentContainerStyle={styles.scrollView}> */}
+				<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+					<View style={styles.scrollView}>
+						<BackButton navigation={navigation} />
 						<Text style={styles.title}>Welcome back!</Text>
 
 						<Formik
@@ -116,61 +114,84 @@ const LoginScreen = ({ navigation }: LoginProps) => {
 								<>
 									<View style={styles.form}>
 										<View style={styles.inputGroup}>
-											<Text style={styles.inputLabel}>
-												Email Address
-											</Text>
-											<Input
+											{/* <Text style={styles.inputLabel}>
+											Email Address
+										</Text> */}
+											<MyInput
 												autoCapitalize="none"
-												containerStyle={styles.inputContainer}
 												keyboardType="email-address"
-												errorMessage={errors.email}
+												// errorMessage={errors.email}
 												// ref={emailRef}
 												placeholder="Email address"
 												// placeholderTextColor="#fff"
 												onChangeText={handleChange("email")}
-												errorStyle={styles.error}
+												// errorStyle={styles.error}
 												onBlur={handleBlur("email")}
 												returnKeyLabel="Done"
 												returnKeyType="done"
 												value={values.email}
-												leftIcon={{
-													type: "ionicon",
-													name: "person-sharp",
-													color: "#575755",
-												}}
 											/>
+											{/* <Input
+											autoCapitalize="none"
+											containerStyle={styles.inputContainer}
+											keyboardType="email-address"
+											errorMessage={errors.email}
+											// ref={emailRef}
+											placeholder="Email address"
+											// placeholderTextColor="#fff"
+											onChangeText={handleChange("email")}
+											errorStyle={styles.error}
+											onBlur={handleBlur("email")}
+											returnKeyLabel="Done"
+											returnKeyType="done"
+											value={values.email}
+											leftIcon={{
+												type: "ionicon",
+												name: "person-sharp",
+												color: "#575755",
+											}}
+										/> */}
 
-											<Text style={styles.inputLabel}>Password</Text>
-											<Input
-												containerStyle={styles.inputContainer}
-												// labelStyle={styles.inputLabel}
-												// containerStyle={styles.input}
-												// ref={passwordRef}
-												errorMessage={errors.password}
-												// ref={dateInputRef}
+											{/* <Text style={styles.inputLabel}>Password</Text> */}
+
+											<MyInput
 												placeholder="Password"
 												secureTextEntry={!isPasswordShown}
-												errorStyle={styles.error}
 												onChangeText={handleChange("password")}
 												onBlur={handleBlur("password")}
 												value={values.password}
 												returnKeyLabel="Done"
 												returnKeyType="done"
-												leftIcon={{
-													type: "material",
-													name: "lock",
-													color: "#575755",
-												}}
-												rightIcon={{
-													onPress: () =>
-														setIsPasswordShown(!isPasswordShown),
-													type: "ionicon",
-													name: isPasswordShown
-														? "eye-off"
-														: "eye",
-													color: "#575755",
-												}}
 											/>
+
+											{/* <Input
+											containerStyle={styles.inputContainer}
+											// labelStyle={styles.inputLabel}
+											// containerStyle={styles.input}
+											// ref={passwordRef}
+											errorMessage={errors.password}
+											// ref={dateInputRef}
+											placeholder="Password"
+											secureTextEntry={!isPasswordShown}
+											errorStyle={styles.error}
+											onChangeText={handleChange("password")}
+											onBlur={handleBlur("password")}
+											value={values.password}
+											returnKeyLabel="Done"
+											returnKeyType="done"
+											leftIcon={{
+												type: "material",
+												name: "lock",
+												color: "#575755",
+											}}
+											rightIcon={{
+												onPress: () =>
+													setIsPasswordShown(!isPasswordShown),
+												type: "ionicon",
+												name: isPasswordShown ? "eye-off" : "eye",
+												color: "#575755",
+											}}
+										/> */}
 
 											<TouchableOpacity
 												style={styles.forgotPasswordButton}
@@ -200,9 +221,9 @@ const LoginScreen = ({ navigation }: LoginProps) => {
 											Don't have an account?{" "}
 											<Link
 												style={styles.registerLink}
-												to={{ screen: "Register" }}
+												to={{ screen: "Signup" }}
 											>
-												Register
+												Sign up
 											</Link>
 										</Text>
 									</View>
@@ -210,10 +231,10 @@ const LoginScreen = ({ navigation }: LoginProps) => {
 							)}
 						</Formik>
 						{/* </ScrollView> */}
-					</SafeAreaView>
-				</TouchableWithoutFeedback>
-			</KeyboardAvoidingView>
-		</ImageBackground>
+					</View>
+				</SafeAreaView>
+			</TouchableWithoutFeedback>
+		</KeyboardAvoidingView>
 	);
 };
 

@@ -3,16 +3,24 @@ import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 // Auth screens Types
 export type AuthStackParamList = {
+	Landing: undefined;
 	Login: undefined;
-	Register: undefined;
+	Signup: undefined;
 	ForgotPassword: undefined;
 	ResetPassword: undefined;
+	Lock: undefined;
 };
 
+export type LandingProps = NativeStackScreenProps<
+	AuthStackParamList,
+	"Landing"
+>;
+
 export type LoginProps = NativeStackScreenProps<AuthStackParamList, "Login">;
+export type LockProps = NativeStackScreenProps<AuthStackParamList, "Lock">;
 export type RegisterProps = NativeStackScreenProps<
 	AuthStackParamList,
-	"Register"
+	"Signup"
 >;
 export type ForgotPasswordProps = NativeStackScreenProps<
 	AuthStackParamList,
@@ -32,13 +40,32 @@ export type BottomNavStackParamList = {
 	Account: undefined;
 };
 
+export type ProfileStackParamList = {
+	ProfileScreen: undefined;
+	EditProfile: undefined;
+	Notifications: undefined;
+};
+
+export type ProfileScreenProps = NativeStackScreenProps<
+	ProfileStackParamList,
+	"ProfileScreen"
+>;
+export type EditProfileProps = NativeStackScreenProps<
+	ProfileStackParamList,
+	"EditProfile"
+>;
+export type EditProfileProps = NativeStackScreenProps<
+	ProfileStackParamList,
+	"Notifications"
+>;
+
 export type HomeProps = BottomTabScreenProps<BottomNavStackParamList, "Home">;
 export type TripsProps = BottomTabScreenProps<BottomNavStackParamList, "Trips">;
 export type TsaPreCheckProps = BottomTabScreenProps<
 	BottomNavStackParamList,
 	"TsaPreCheck"
 >;
-export type AccountProps = BottomTabScreenProps<
+export type ProfileProps = BottomTabScreenProps<
 	BottomNavStackParamList,
 	"Account"
 >;

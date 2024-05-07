@@ -9,16 +9,16 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	Text,
-	ImageBackground,
 } from "react-native";
 import { styles } from "./register.styles";
 import { apiInstance } from "../../../api/axios";
 import { setCredentials } from "../../../features/authSlice";
 import { Button, Input } from "@rneui/themed";
 import { Formik } from "formik";
-import BACKGROUND_IMAGE from "../../../../assets/background.jpg";
 import { RegisterProps } from "../../../navigation/types";
 import { useRegisterMutation } from "../../../services/api/authApi";
+import MyInput from "../form/MyInput";
+import BackButton from "../../../components/BackButton";
 
 type ValuesProps = {
 	email?: string;
@@ -80,18 +80,15 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 	};
 
 	return (
-		<ImageBackground
-			source={BACKGROUND_IMAGE}
-			resizeMode="cover"
-			style={{ flex: 1, justifyContent: "center" }}
+		<KeyboardAvoidingView
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			style={{ flex: 1 }}
+			keyboardVerticalOffset={-150}
 		>
-			<KeyboardAvoidingView
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
-				style={{ flex: 1 }}
-				// keyboardVerticalOffset={60}
-			>
-				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-					<SafeAreaView style={styles.scrollView}>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				<SafeAreaView style={styles.container}>
+					<View style={styles.scrollView}>
+						<BackButton navigation={navigation} />
 						<Text style={styles.title}>Create Account</Text>
 						<Formik
 							// validateOnBlur
@@ -109,10 +106,10 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 							}) => (
 								<>
 									<View style={styles.form}>
-										<Text style={styles.inputLabel}>
+										{/* <Text style={styles.inputLabel}>
 											Email Address
-										</Text>
-										<Input
+										</Text> */}
+										<MyInput
 											autoCapitalize="none"
 											// containerStyle={styles.input}
 											// labelStyle={styles.inputLabel}
@@ -122,22 +119,14 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 											onChangeText={handleChange("email")}
 											onBlur={handleBlur("email")}
 											value={values.email}
-											errorMessage={errors.email}
+											// errorMessage={errors.email}
 											onSubmitEditing={handleSignup}
-											errorStyle={styles.error}
+											// errorStyle={styles.error}
 											returnKeyLabel="Done"
 											returnKeyType="done"
-											leftIcon={{
-												type: "font-awesome",
-												name: "envelope",
-												size: 20,
-												color: "#575755",
-											}}
-											// clearButtonMode="while-editing"
 										/>
 
-										<Text style={styles.inputLabel}>Password</Text>
-										<Input
+										<MyInput
 											labelStyle={styles.inputLabel}
 											containerStyle={styles.input}
 											// ref={dateInputRef}
@@ -146,40 +135,24 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 											onBlur={handleBlur("password")}
 											secureTextEntry={!isPasswordShown}
 											value={values.password}
-											errorMessage={errors.password}
-											errorStyle={styles.error}
+											// errorMessage={errors.password}
+											// errorStyle={styles.error}
 											onSubmitEditing={handleSignup}
-											returnKeyLabel="Done"
-											returnKeyType="done"
-											leftIcon={{
-												type: "font-awesome",
-												name: "lock",
-												color: "#575755",
-											}}
-											rightIcon={{
-												onPress: () =>
-													setIsPasswordShown(!isPasswordShown),
-												type: "ionicon",
-												name: isPasswordShown ? "eye-off" : "eye",
-												color: "#575755",
-											}}
 										/>
 
-										<Text style={styles.inputLabel}>
-											Confirm Your Password
-										</Text>
+										{/* <Text style={styles.inputLabel}>
+										Confirm Your Password
+									</Text> */}
 
-										<Input
-											// labelStyle={styles.inputLabel}
-											containerStyle={styles.input}
+										<MyInput
 											// ref={dateInputRef}
 											placeholder="Confirm password"
 											secureTextEntry={true}
 											onChangeText={handleChange("confirmPassword")}
 											onBlur={handleBlur("confirmPassword")}
 											value={values.confirmPassword}
-											errorMessage={errors.confirmPassword}
-											errorStyle={styles.error}
+											// errorMessage={errors.confirmPassword}
+											// errorStyle={styles.error}
 											returnKeyLabel="Done"
 											returnKeyType="done"
 										/>
@@ -207,10 +180,10 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 								Login
 							</Link>
 						</Text>
-					</SafeAreaView>
-				</TouchableWithoutFeedback>
-			</KeyboardAvoidingView>
-		</ImageBackground>
+					</View>
+				</SafeAreaView>
+			</TouchableWithoutFeedback>
+		</KeyboardAvoidingView>
 	);
 };
 

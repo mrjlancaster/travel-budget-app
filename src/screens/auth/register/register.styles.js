@@ -11,18 +11,24 @@ const shadow = (opac, w, h) => {
 };
 
 export const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+	},
 	scrollView: {
 		flex: 1,
 		justifyContent: "center",
-		paddingHorizontal: 10,
+		paddingHorizontal: 24,
 	},
 
 	title: {
 		width: 150,
-		fontSize: 34,
+		fontSize: 28,
 		bottom: 50,
 		left: 15,
-		color: "#575755",
+		// bottom: 80,
+		fontWeight: "600",
+		color: "#1B1E28",
 		...shadow(0.1, 1, 1),
 	},
 	form: {
@@ -35,20 +41,17 @@ export const styles = StyleSheet.create({
 		left: 12,
 		marginTop: 10,
 	},
-	input: {
-		marginTop: 8,
-	},
 	loginLinkText: {
+		// marginTop: 50,
+		top: 50,
 		textAlign: "center",
 		fontSize: 17,
-		top: 20,
+		// top: 20,
 		color: "#575755",
 		shadowColor: "#000",
 	},
 	loginLink: {
-		color: "blue",
-		fontWeight: "400",
-		...shadow(0, 1, 1),
+		color: "#0F68EC",
 	},
 	error: {
 		fontSize: 14,
