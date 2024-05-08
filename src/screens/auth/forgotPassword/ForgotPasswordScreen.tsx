@@ -7,8 +7,6 @@ import {
 	Platform,
 	TouchableWithoutFeedback,
 	Keyboard,
-	Modal,
-	Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import MyInput from "../form/MyInput";
@@ -16,6 +14,7 @@ import MyButton from "../form/MyButton";
 import BackButton from "../../../components/BackButton";
 import { ForgotPasswordProps } from "../../../navigation/types";
 import MyModal from "./Modal";
+import { Button } from "@rneui/themed";
 
 export default function ForgotPasswordScreen({
 	navigation,
@@ -32,7 +31,7 @@ export default function ForgotPasswordScreen({
 				<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
 					<MyModal isOpen={isModalOpen} />
 					<View style={styles.scrollView}>
-						<BackButton navigation={navigation} />
+						<BackButton handleNavigation={() => navigation.goBack()} />
 
 						<View style={styles.textWrapper}>
 							<Text style={styles.title}>Forgot Password</Text>
@@ -42,7 +41,14 @@ export default function ForgotPasswordScreen({
 						</View>
 						<View style={styles.formWrapper}>
 							<MyInput placeholder="Enter your email" />
-							<MyButton title="Reset Password" />
+							<Button
+								// onPress={() => navigation.navigate("Signup")}
+								size="lg"
+								color="#3B71F3"
+								radius="md"
+							>
+								Reset Password
+							</Button>
 						</View>
 					</View>
 				</SafeAreaView>

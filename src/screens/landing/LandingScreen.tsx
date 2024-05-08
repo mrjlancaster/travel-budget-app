@@ -9,6 +9,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BACKGROUND_IMAGE from "../../../assets/background.jpg";
 import { LandingProps } from "../../navigation/types";
+import { Button } from "@rneui/themed";
 
 const LandingScreen = ({ navigation }: LandingProps) => {
 	return (
@@ -19,18 +20,24 @@ const LandingScreen = ({ navigation }: LandingProps) => {
 		>
 			<SafeAreaView style={{ flex: 1, alignItems: "center" }}>
 				<View style={styles.buttonGroup}>
-					<TouchableOpacity
+					<Button
 						containerStyle={styles.button}
 						onPress={() => navigation.navigate("Login")}
+						size="lg"
+						color="#3B71F3"
+						radius="md"
 					>
-						<Text style={styles.buttonTitle}>Login</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
+						Login
+					</Button>
+					<Button
 						containerStyle={styles.button}
 						onPress={() => navigation.navigate("Signup")}
+						size="lg"
+						color="#3B71F3"
+						radius="md"
 					>
-						<Text style={styles.buttonTitle}>Sign Up</Text>
-					</TouchableOpacity>
+						Sign Up
+					</Button>
 				</View>
 			</SafeAreaView>
 		</ImageBackground>
@@ -48,12 +55,12 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		top: "70%",
-		backgroundColor: "#0F68EC",
-		borderRadius: 12,
-		paddingVertical: 17,
+		// backgroundColor: "#0F68EC",
+		// borderRadius: 12,
+		// paddingVertical: 17,
 		width: "100%",
-		justifyContent: "center",
-		alignItems: "center",
+		// justifyContent: "center",
+		// alignItems: "center",
 
 		shadowColor: "#000",
 		shadowOffset: {

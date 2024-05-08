@@ -2,12 +2,13 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const BackButton = ({ navigation }) => {
+type Props = {
+	handleNavigation: () => void;
+};
+
+const BackButton = ({ handleNavigation }: Props) => {
 	return (
-		<TouchableOpacity
-			style={styles.button}
-			onPress={() => navigation.popToTop()}
-		>
+		<TouchableOpacity style={styles.button} onPress={handleNavigation}>
 			<Icon name="chevron-back" size={24} color={"#1B1E28"} />
 		</TouchableOpacity>
 	);
@@ -34,7 +35,5 @@ const styles = StyleSheet.create({
 		elevation: 3,
 	},
 });
-
-// /F7F7F9
 
 export default BackButton;

@@ -88,7 +88,7 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<SafeAreaView style={styles.container}>
 					<View style={styles.scrollView}>
-						<BackButton navigation={navigation} />
+						<BackButton handleNavigation={() => navigation.popToTop()} />
 						<Text style={styles.title}>Create Account</Text>
 						<Formik
 							// validateOnBlur
@@ -168,7 +168,7 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 											color="#3B71F3"
 											radius="md"
 										>
-											Register
+											Sign Up
 										</Button>
 									</View>
 								</>

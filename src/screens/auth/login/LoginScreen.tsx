@@ -93,7 +93,7 @@ const LoginScreen = ({ navigation }: LoginProps) => {
 				{/* <ScrollView contentContainerStyle={styles.scrollView}> */}
 				<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
 					<View style={styles.scrollView}>
-						<BackButton navigation={navigation} />
+						<BackButton handleNavigation={() => navigation.popToTop()} />
 						<Text style={styles.title}>Welcome back!</Text>
 
 						<Formik
