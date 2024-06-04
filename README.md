@@ -117,3 +117,7 @@ card: {
    alignItems: "center",
 }
 ```
+
+# Mockups
+
+![App Screens](/mockups/group_screenshot.jpg)
