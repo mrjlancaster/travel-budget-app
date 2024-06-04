@@ -1,4 +1,6 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Mockup
+
+![App Screens](/group_screenshot.jpg)
 
 # Getting Started
 
@@ -117,7 +119,3 @@ card: {
    alignItems: "center",
 }
 ```
-
-# Mockups
-
-![App Screens](/mockups/group_screenshot.jpg)
