@@ -82,7 +82,7 @@ To learn more about React Native, take a look at the following resources:
 
 ## Custom Card Component styles
 
-```
+<!-- ```
 Example one:
 
 card: {
@@ -118,4 +118,4 @@ card: {
    justifyContent: "center",
    alignItems: "center",
 }
-```
+``` -->
