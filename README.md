@@ -1,4 +1,4 @@
-# Mockup
+# App screens
 
 ![App Screens](/group_screenshot.jpg)
 
