@@ -17,7 +17,7 @@ const CustomButton = ({ onPress, title }: Props) => {
 const styles = StyleSheet.create({
 	container: {
 		elevation: 8,
-		backgroundColor: "#007bff",
+		backgroundColor: "#17202A",
 		borderRadius: 5,
 		paddingVertical: 10,
 		paddingHorizontal: 12,

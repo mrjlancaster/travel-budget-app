@@ -14,60 +14,67 @@ import BottomNav from "./BottomNav";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
-import { getAccessToken } from "../utils";
+import { getAccessToken, getRefreshToken } from "../utils";
 import { useRefreshTokenMutation } from "../services/api/authApi";
 import UserInactivityProvider from "../providers/UserInactivity";
 import { apiInstance } from "../api/axios";
 import axios, { AxiosResponse } from "axios";
+import { refreshToken } from "../api/authApi";
 
 const Root = () => {
 	const { isAuthenticated } = useAppSelector(selectAuth);
 	console.error("IS AUTH", isAuthenticated);
 	const [loading, setLoading] = useState(true);
-	const [handleRefresh, { isLoading }] = useRefreshTokenMutation();
+	// const [handleRefresh, { isLoading }] = useRefreshTokenMutation();
 	const dispatch = useAppDispatch();
+	console.log("IS AUTH", isAuthenticated);
 
-	// const verifyAuth = async () => {
-	// 	try {
-	// 		const token = await getAccessToken();
+	const initAsync = async () => {
+		try {
+			const token = await getAccessToken();
+			const refrehToken = await getRefreshToken();
 
-	// 		if (token) {
-	// 			const { data }: AxiosResponse = await apiInstance.get(
-	// 				"/auth/token/verify"
-	// 			);
-	// 			console.log("Response", data);
-	// 		}
+			if (token && refrehToken) {
+				dispatch(
+					setCredentials({ accessToken: token, refreshToken: refrehToken })
+				);
 
-	// 		// if (token) {
-	// 		// 	const decoded: { exp: number } = jwtDecode(token);
-	// 		// 	const expiration: any = decoded.exp * 1000;
-	// 		// 	const currentDate = new Date();
+				// const { data }: AxiosResponse = await apiInstance.get(
+				// 	"/auth/token/verify"
+				// );
+				// console.log("Response", data);
+			}
 
-	// 		// 	console.log("TOKEN EXPIRATION ", expiration, currentDate.getTime());
-	// 		// 	console.log("CURRENT TIME", expiration < currentDate.getTime());
+			// if (token) {
+			// 	const decoded: { exp: number } = jwtDecode(token);
+			// 	const expiration: any = decoded.exp * 1000;
+			// 	const currentDate = new Date();
 
-	// 		// 	if (expiration < currentDate.getTime()) {
-	// 		// 		const { data } = await handleRefresh(refreshToken).unwrap();
-	// 		// 		console.log("REFRESHED TOKEN ON INIT ", data);
-	// 		// 		dispatch(setCredentials(data.data));
-	// 		// 	} else {
-	// 		// 		dispatch(initializeFromToken(token));
-	// 		// 	}
-	// 		// }
-	// 	} catch (err: any) {
-	// 		console.log(err);
-	// 		if (err.response) {
-	// 			const { message } = err.response.data;
-	// 			console.log(err.response.data);
-	// 		}
-	// 	} finally {
-	// 		setLoading(false);
-	// 	}
-	// };
+			// 	console.log("TOKEN EXPIRATION ", expiration, currentDate.getTime());
+			// 	console.log("CURRENT TIME", expiration < currentDate.getTime());
+
+			// 	if (expiration < currentDate.getTime()) {
+			// 		const { data } = await handleRefresh(refreshToken).unwrap();
+			// 		console.log("REFRESHED TOKEN ON INIT ", data);
+			// 		dispatch(setCredentials(data.data));
+			// 	} else {
+			// 		dispatch(initializeFromToken(token));
+			// 	}
+			// }
+		} catch (err: any) {
+			console.log(err);
+			if (err.response) {
+				const { message } = err.response.data;
+				console.log(err.response.data);
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	useEffect(() => {
-		// verifyAuth();
-		setLoading(false);
+		initAsync();
+		// setLoading(false);
 	}, [isAuthenticated]);
 
 	if (loading) {

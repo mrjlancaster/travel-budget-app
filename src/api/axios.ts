@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { refreshToken } from "./authApi";
-import { API_URL } from "@env";
+import { BASE_URL, API_URL } from "@env";
 import { clearStorage, getRefreshToken } from "../utils";
 
 export const apiInstance = axios.create({

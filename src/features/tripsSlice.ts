@@ -11,12 +11,14 @@ interface Trip {
 }
 
 type InitialState = {
-	trips: Trip[];
+	upcomingTrips: Trip[];
+	allTrips: Trip[];
 	newTripDraft: null | Trip;
 };
 
 const initialState: InitialState = {
-	trips: [],
+	upcomingTrips: [],
+	allTrips: [],
 	newTripDraft: null,
 };
 
@@ -25,9 +27,14 @@ const tripsSlice = createSlice({
 	initialState,
 	reducers: {
 		// Set trips state
+		setUpcomingTrips: (state, action) => {
+			console.error("UPCOMING TRIPS PAYLOAD", action.payload);
+			state.upcomingTrips = action.payload;
+		},
+
 		setTrips: (state, action) => {
 			console.error("TRIPS STATE PAYLOAD => ", action.payload);
-			state.trips = action.payload;
+			state.allTrips = action.payload;
 		},
 
 		addNewTrip: (state, action) => {
@@ -40,7 +47,7 @@ const tripsSlice = createSlice({
 			};
 
 			console.log("NEW ENTRY", newTrip);
-			console.log("STATE", state.trips);
+			console.log("STATE", state.allTrips);
 
 			state.newTripDraft = newTrip;
 		},
@@ -51,7 +58,8 @@ const tripsSlice = createSlice({
 	},
 });
 
-export const { setTrips, addNewTrip, resetTripDraft } = tripsSlice.actions;
+export const { setUpcomingTrips, setTrips, addNewTrip, resetTripDraft } =
+	tripsSlice.actions;
 
 export const selectTrips = (state: RootState) => state.trips;
 export const selectNewTripDraft = (state: RootState) =>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
 	View,
@@ -11,7 +10,6 @@ import {
 	Text,
 } from "react-native";
 import { styles } from "./register.styles";
-import { apiInstance } from "../../../api/axios";
 import { setCredentials } from "../../../features/authSlice";
 import { Button, Input } from "@rneui/themed";
 import { Formik } from "formik";
@@ -19,6 +17,7 @@ import { RegisterProps } from "../../../navigation/types";
 import { useRegisterMutation } from "../../../services/api/authApi";
 import MyInput from "../form/MyInput";
 import BackButton from "../../../components/BackButton";
+import { useAppDispatch } from "../../../app/hooks";
 
 type ValuesProps = {
 	email?: string;
@@ -56,7 +55,7 @@ function validate(values: ValuesProps) {
 
 const RegisterScreen = ({ navigation }: RegisterProps) => {
 	const [register, { isLoading }] = useRegisterMutation();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 
 	const [formState, setFormState] = useState({
@@ -67,8 +66,7 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 
 	const handleSignup = async (values: ValuesProps) => {
 		try {
-			const { data } = await register(values).unwrap();
-
+			const data = await register(values).unwrap();
 			console.log("response", data);
 
 			if (data.success == 1) {
@@ -164,7 +162,7 @@ const RegisterScreen = ({ navigation }: RegisterProps) => {
 											}}
 											onPress={handleSubmit}
 											size="lg"
-											loading={isSubmitting}
+											loading={isLoading}
 											color="#3B71F3"
 											radius="md"
 										>

@@ -1,15 +1,10 @@
-import {
-	View,
-	Text,
-	ImageBackground,
-	StyleSheet,
-	SafeAreaView,
-} from "react-native";
+import { View, ImageBackground, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BACKGROUND_IMAGE from "../../../assets/background.jpg";
 import { LandingProps } from "../../navigation/types";
 import { Button } from "@rneui/themed";
+import AppButton from "../../components/buttons/AppButton";
 
 const LandingScreen = ({ navigation }: LandingProps) => {
 	return (
@@ -25,16 +20,17 @@ const LandingScreen = ({ navigation }: LandingProps) => {
 						onPress={() => navigation.navigate("Login")}
 						size="lg"
 						color="#3B71F3"
-						radius="md"
+						radius="sm"
 					>
 						Login
 					</Button>
+
 					<Button
 						containerStyle={styles.button}
 						onPress={() => navigation.navigate("Signup")}
 						size="lg"
 						color="#3B71F3"
-						radius="md"
+						radius="sm"
 					>
 						Sign Up
 					</Button>
@@ -50,8 +46,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		width: "100%",
 		alignItems: "center",
-
-		gap: 20,
+		gap: 30,
 	},
 	button: {
 		top: "70%",
@@ -73,7 +68,7 @@ const styles = StyleSheet.create({
 	},
 	buttonTitle: {
 		fontSize: 17,
-		fontWeight: "500",
+		fontWeight: "600",
 		color: "#fff",
 	},
 });

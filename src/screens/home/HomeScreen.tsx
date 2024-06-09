@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { FAB, Text, Button, SearchBar } from "@rneui/themed";
 // import { Searchbar } from "react-native-paper";
@@ -8,11 +8,34 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../features/authSlice";
 import Searchbar from "../../components/searchbar/Searchbar";
 import { HomeProps, HomeScreenProps } from "../../navigation/types";
-import { getAccessToken } from "../../utils";
+import { useGetUpcomingTripsQuery } from "../../services/api/tripsApi";
+import Trips from "../../components/Trips";
+import List from "../trips/List";
+import UpcomingTrips from "./UpcomingTrips";
+import NoTrips from "./NoTrips";
+import CustomButton from "../../components/buttons/CustomButton";
+import TsaPrecheckCard from "../../components/TsaPrecheckCard";
+import AddTsaModal from "../../components/modals/AddTsaModal";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+	const [data, setData] = useState([]);
 	const { user, isAuthenticated } = useSelector(selectUser);
+	const [refreshing, setRefreshing] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
+	const [skip, setSkip] = useState(false);
+	const [isTsaModalShown, setIsTsaModalShown] = useState(false);
+
+	const {
+		data: upcomingTrips,
+		isLoading,
+		isSuccess,
+		isFetching,
+		error,
+	} = useGetUpcomingTripsQuery({
+		skip: skip,
+	});
+
+	console.log(upcomingTrips);
 
 	const upcomingTrip = {
 		id: 1,
@@ -24,8 +47,29 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
 	const onChangeSearch = (query) => setSearchQuery(query);
 
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		setSkip(false);
+		setRefreshing(false);
+	}, []);
+
+	useEffect(() => {
+		if (isSuccess) {
+			if (upcomingTrips.length) {
+				setData(upcomingTrips);
+			}
+		}
+
+		console.log("SUCCESS", isSuccess);
+		setSkip(true);
+	}, [isFetching]);
+
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+			<AddTsaModal
+				isVisible={isTsaModalShown}
+				close={() => setIsTsaModalShown(false)}
+			/>
 			{/* <TopNavigation title="Welcome, Jonathan" /> */}
 			<View style={styles.searchBarWrapper}>
 				{/* <Searchbar
@@ -38,17 +82,19 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 				{/* <SearchBox searchQuery={searchQuery} /> */}
 			</View>
 
-			{!searchQuery.length && (
-				<ScrollView
-					contentContainerStyle={{ flex: 1, paddingHorizontal: 15 }}
-				>
-					<TravelCard destination={upcomingTrip} />
+			{data.length ? (
+				<UpcomingTrips onRefresh={onRefresh} refreshing={refreshing} />
+			) : (
+				<ScrollView contentContainerStyle={styles.content}>
+					<NoTrips />
+					<TsaPrecheckCard openModal={() => setIsTsaModalShown(true)} />
 				</ScrollView>
 			)}
+
 			<FAB
 				style={styles.createButton}
 				onPress={handlePress}
-				color="#397af8"
+				color="#17202A"
 				icon={{ name: "add", color: "white" }}
 			/>
 		</SafeAreaView>
@@ -58,7 +104,13 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 export const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		// backgroundColor: "#fff",
+	},
+	content: {
+		paddingHorizontal: 24,
+		flex: 1,
+		justifyContent: "space-evenly",
+		alignItems: "center",
 	},
 	welcomeText: {
 		marginVertical: 20,
@@ -67,9 +119,10 @@ export const styles = StyleSheet.create({
 	},
 	searchBarWrapper: {
 		paddingHorizontal: 15,
+		marginTop: 20,
 	},
 	searchBar: {
-		marginTop: 30,
+		marginTop: 40,
 		marginBottom: 10,
 	},
 	cardsContainer: {
@@ -83,22 +136,6 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 	},
 
-	card: {
-		position: "relative",
-		// borderRadius: 20,
-	},
-	cardTitle: {
-		position: "absolute",
-		fontStyle: "italic",
-		bottom: 0,
-		color: "#fff",
-		fontWeight: "bold",
-		fontSize: 22,
-		padding: 18,
-		textShadowColor: "rgba(0, 0, 0, 0.75)",
-		textShadowOffset: { width: -1, height: 1 },
-		textShadowRadius: 10,
-	},
 	background: {
 		position: "relative",
 		height: 200,

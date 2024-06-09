@@ -32,28 +32,26 @@ const BottomNav = () => {
 	return (
 		<Tab.Navigator
 			screenOptions={{
+				// tabBarShowLabel: false,
 				headerShown: false,
+				tabBarActiveTintColor: "#17202A",
 			}}
 		>
 			<Tab.Screen
-				name="Home"
+				name="HomeStack"
 				component={HomeStack}
-				options={{ tabBarIcon: homeTabIcon }}
+				options={{ tabBarIcon: homeTabIcon, title: "Home" }}
 			/>
 			<Tab.Screen
-				name="Trips"
+				name="TripsStack"
 				component={TripsStack}
-				options={{ tabBarIcon: tripsTabIcon }}
+				options={{ tabBarIcon: tripsTabIcon, title: "Trips" }}
 			/>
-			{/* <Tab.Screen
-				name="TsaPreCheck"
-				component={TsaPreCheckScreen}
-				options={{ tabBarIcon: tripsTabIcon, tabBarLabel: "Pre Check" }}
-			/> */}
+
 			<Tab.Screen
-				name="Account"
+				name="AccountStack"
 				component={ProfileStack}
-				options={{ tabBarIcon: profileTabIcon }}
+				options={{ tabBarIcon: profileTabIcon, title: "Account" }}
 			/>
 		</Tab.Navigator>
 	);

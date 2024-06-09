@@ -12,6 +12,14 @@ type Trips = Trip[];
 
 export const tripsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
+		getUpcomingTrips: builder.query<Trips, void>({
+			query: () => ({
+				url: "/trips/upcoming",
+			}),
+			transformResponse: (response: { data: Trips }, meta, arg) => {
+				return response.data;
+			},
+		}),
 		getTrips: builder.query<Trips, void>({
 			query: () => ({
 				url: "/trips",
@@ -53,6 +61,7 @@ export const tripsApi = api.injectEndpoints({
 });
 
 export const {
+	useGetUpcomingTripsQuery,
 	useGetTripsQuery,
 	useGetTripByIdQuery,
 	useCreateTripMutation,

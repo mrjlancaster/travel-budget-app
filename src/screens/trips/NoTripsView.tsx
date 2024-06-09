@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 	noTripsText: {
 		fontSize: 26,
 		fontWeight: "500",
+		color: "#17202A",
 	},
 	noTripsHelperText: {
 		marginTop: 10,

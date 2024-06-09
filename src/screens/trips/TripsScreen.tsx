@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, FlatList, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import { styles } from "./styles";
 import { ListItem, Icon, Image } from "@rneui/themed";
 import TopNavigation from "../../components/TopNavigation";
@@ -16,8 +16,8 @@ const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
 	const [skip, setSkip] = useState(true);
-	const [refreshing, setRefreshing] = useState(false);
-	const { trips: myTrips } = useAppSelector(selectTrips);
+	const [refreshing, setRefreshing] = useState(true);
+	const { allTrips: myTrips } = useAppSelector(selectTrips);
 	console.log("MY TRIPS", myTrips);
 	const dispatch = useAppDispatch();
 	const [cardBackground, setCardBackground] = useState<null | string>(null);

@@ -7,7 +7,6 @@ import {
 	FlatList,
 	Text,
 } from "react-native";
-import TopNavigation from "../../components/TopNavigation";
 import { Avatar } from "@rneui/themed";
 import { useEffect } from "react";
 import { apiInstance } from "../../api/axios";
@@ -16,11 +15,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProfileScreenProps } from "../../navigation/types";
 
-const ListItem = ({ label, action }) => {
+type Item = {
+	label: string;
+	action: () => void;
+};
+
+const ListItem = ({ label, action }: Item) => {
 	return (
 		<TouchableOpacity style={styles.listItem} onPress={action}>
-			<Text style={styles.listItemLabel}>{label}</Text>
-			<Icon name="chevron-forward-outline" size={27} />
+			<Text style={[styles.listItemLabel]}>{label}</Text>
+			<Icon name="chevron-forward-outline" size={24} color="#7D848D" />
 		</TouchableOpacity>
 	);
 };
@@ -32,7 +36,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 	const DATA = [
 		{
 			action: () => navigation.navigate("EditProfile"),
-			label: "Edit profile information",
+			label: "Profile",
 		},
 		{
 			action: () => navigation.navigate("Notifications"),
@@ -63,7 +67,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<Text style={styles.screenTitle}>Profile</Text>
+			<Text style={styles.screenTitle}>Account</Text>
 			<FlatList
 				ListHeaderComponentStyle={styles.listHeader}
 				ListHeaderComponent={() => {
@@ -100,9 +104,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 	},
 	screenTitle: {
-		fontSize: 28,
+		fontSize: 24,
 		marginTop: 10,
-		paddingHorizontal: 24,
+		fontWeight: "500",
+		textAlign: "center",
+		// paddingHorizontal: 24,
 	},
 	heading: {
 		fontSize: 28,
@@ -121,14 +127,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	listItem: {
-		marginVertical: 15,
-		paddingHorizontal: 20,
+		marginVertical: 18,
+		paddingHorizontal: 24,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
 	},
 	listItemLabel: {
 		fontSize: 17,
+		fontWeight: "500",
 	},
 	actionContainer: {
 		flex: 1,

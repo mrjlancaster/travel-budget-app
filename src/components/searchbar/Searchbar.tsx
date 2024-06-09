@@ -48,7 +48,7 @@ export default function Searchbar() {
 			onPress={() => navigation.navigate("SearchModal")}
 			style={styles.container}
 		>
-			<Text>
+			<Text style={styles.searchInput}>
 				<SearchIcon name="search" size={17} /> Search destination...
 			</Text>
 			{/* <TextInput
@@ -62,11 +62,16 @@ export default function Searchbar() {
 
 const styles = StyleSheet.create({
 	container: {
-		borderColor: "#ddd",
-		borderWidth: 2,
+		borderColor: "#F1F1F1",
+		borderWidth: 1,
 		flexDirection: "row",
+		backgroundColor: "#F1F1F1",
 		gap: 10,
 		padding: 10,
 		borderRadius: 5,
+	},
+	searchInput: {
+		color: "#787878",
+		fontSize: 15,
 	},
 });

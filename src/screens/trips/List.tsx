@@ -61,6 +61,7 @@ const List = ({ onRefresh, refreshing }: Props) => {
 
 	return (
 		<FlatList
+			showsVerticalScrollIndicator={false}
 			style={{ paddingHorizontal: 24 }}
 			ListEmptyComponent={NoTripsView}
 			data={trips}

@@ -34,10 +34,10 @@ export type ResetPasswordProps = NativeStackScreenProps<
 
 // Bottom nav types
 export type BottomNavStackParamList = {
-	Home: undefined;
-	Trips: undefined;
-	TsaPreCheck: undefined;
-	Account: undefined;
+	HomeStack: undefined;
+	AddTsaModal: undefined;
+	TripsStack: undefined;
+	AccountStack: undefined;
 };
 
 export type ProfileStackParamList = {
@@ -88,11 +88,17 @@ export type HomeStackParamList = {
 	SearchModal: undefined;
 	NewTrip: undefined;
 	DatePickerModal: { fieldName: string } | undefined;
+	AddTsaModal: undefined;
 };
 
 export type HomeScreenProps = NativeStackScreenProps<
 	HomeStackParamList,
 	"HomeScreen"
+>;
+
+export type TsaModalProps = NativeStackScreenProps<
+	HomeStackParamList,
+	"AddTsaModal"
 >;
 
 export type HomeStackProps = NativeStackScreenProps<HomeStackParamList>;

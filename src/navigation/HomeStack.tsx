@@ -9,6 +9,9 @@ import CustomHeaderBackButton from "../components/CustomBackButton";
 import SearchModal from "../components/searchModal/SearchModal";
 import CustomHeader from "../screens/tripDetails/CustomHeader";
 import DatepickerModal from "../components/modals/DatepickerModal";
+import AddTsaModal from "../components/modals/AddTsaModal";
+import { TransitionPresets } from "@react-navigation/stack";
+import { HeaderStyleInterpolators } from "@react-navigation/stack";
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -63,6 +66,17 @@ const HomeStack = () => {
 					name="DatePickerModal"
 					component={DatepickerModal}
 					options={{ headerTitle: "Choose Dates" }}
+				/>
+				<Stack.Screen
+					name="AddTsaModal"
+					component={AddTsaModal}
+					options={{
+						presentation: "transparentModal",
+						headerShown: false,
+						cardOverlayEnabled: true,
+						gestureEnabled: true,
+						...TransitionPresets.ModalPresentationIOS,
+					}}
 				/>
 			</Stack.Group>
 		</Stack.Navigator>

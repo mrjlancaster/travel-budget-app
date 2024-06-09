@@ -7,7 +7,7 @@ import type {
 import { initializeFromToken, logout } from "../features/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAccessToken, getRefreshToken, saveInStorage } from "../utils";
-import { API_URL } from "@env";
+import { BASE_URL, API_URL } from "@env";
 
 const baseUrl = API_URL;
 const baseQuery = fetchBaseQuery({
@@ -16,7 +16,12 @@ const baseQuery = fetchBaseQuery({
 	prepareHeaders: async (headers, { endpoint }) => {
 		const token = await getAccessToken();
 
-		if (token && endpoint !== "refresh") {
+		const requiresToken =
+			endpoint !== "login" &&
+			endpoint !== "register" &&
+			endpoint !== "refresh";
+
+		if (token && requiresToken) {
 			headers.set("authorization", `Bearer ${token}`);
 		}
 
@@ -76,7 +81,8 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const api = createApi({
 	reducerPath: "api",
+	// baseQuery: baseQuery,
 	baseQuery: baseQueryWithReauth,
 	endpoints: () => ({}),
-	refetchOnReconnect: true,
+	// refetchOnReconnect: true,
 });
