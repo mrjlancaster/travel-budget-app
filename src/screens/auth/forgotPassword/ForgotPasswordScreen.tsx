@@ -10,16 +10,27 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import MyInput from "../form/MyInput";
-import MyButton from "../form/MyButton";
 import BackButton from "../../../components/BackButton";
 import { ForgotPasswordProps } from "../../../navigation/types";
 import MyModal from "./Modal";
 import { Button } from "@rneui/themed";
+import { useResetPasswordMutation } from "../../../services/api/authApi";
 
 export default function ForgotPasswordScreen({
 	navigation,
 }: ForgotPasswordProps) {
+	const [email, setEmail] = useState("");
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [resetPassword, { isLoading, isSuccess }] = useResetPasswordMutation();
+
+	const handlePasswordReset = async () => {
+		try {
+			const res = await resetPassword(email).unwrap();
+			console.log("RESET PASSWORD RESPONSE", res);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<KeyboardAvoidingView
@@ -40,11 +51,17 @@ export default function ForgotPasswordScreen({
 							</Text>
 						</View>
 						<View style={styles.formWrapper}>
-							<MyInput placeholder="Enter your email" />
+							<MyInput
+								placeholder="Enter your email"
+								value={email}
+								autoCapitalize="none"
+								onChangeText={(text) => setEmail(text)}
+							/>
 							<Button
-								// onPress={() => navigation.navigate("Signup")}
+								onPress={handlePasswordReset}
 								size="lg"
 								color="#3B71F3"
+								loading={isLoading}
 								radius="md"
 							>
 								Reset Password

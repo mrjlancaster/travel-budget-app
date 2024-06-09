@@ -1,10 +1,5 @@
 import { api, config } from "../index";
 
-interface Credentials {
-	email: string;
-	password: string;
-}
-
 export const usersApi = api.injectEndpoints({
 	endpoints: (build) => ({
 		addTsaPreCheck: build.mutation({
