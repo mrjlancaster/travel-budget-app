@@ -8,12 +8,13 @@ import {
 	Text,
 } from "react-native";
 import { Avatar } from "@rneui/themed";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { apiInstance } from "../../api/axios";
 import { logout, selectUser } from "../../features/authSlice";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProfileScreenProps } from "../../navigation/types";
+import LogoutModal from "../../components/modals/LogoutModal";
 
 type Item = {
 	label: string;
@@ -32,6 +33,7 @@ const ListItem = ({ label, action }: Item) => {
 const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 	const { user } = useAppSelector(selectUser);
 	const dispatch = useAppDispatch();
+	const [isLogoutModalShown, setIsLogoutModalShown] = useState(false);
 
 	const DATA = [
 		{
@@ -46,7 +48,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 			action: () => navigation.navigate("Settings"),
 			label: "Settings",
 		},
-		{ action: () => dispatch(logout()), label: "Logout" },
+		{ action: () => setIsLogoutModalShown(true), label: "Logout" },
 	];
 
 	useEffect(() => {
@@ -67,6 +69,10 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
+			<LogoutModal
+				isVisible={isLogoutModalShown}
+				close={() => setIsLogoutModalShown(false)}
+			/>
 			<Text style={styles.screenTitle}>Account</Text>
 			<FlatList
 				ListHeaderComponentStyle={styles.listHeader}

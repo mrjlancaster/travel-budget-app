@@ -9,6 +9,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import Modal from "react-native-modal";
+import { useAddTsaPreCheckMutation } from "../../services/api/usersApi";
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight =
 	Platform.OS === "ios" ? Dimensions.get("window").height : null;
@@ -20,7 +21,16 @@ type Props = {
 
 const AddTsaModal = ({ isVisible, close }: Props) => {
 	const [input, onChangeText] = useState("");
-	const handleSave = async () => {};
+	const [addTsa, { isLoading }] = useAddTsaPreCheckMutation();
+
+	const handleSave = async () => {
+		try {
+			const res = await addTsa({ tsa_precheck: input }).unwrap();
+			console.log("TSA PRECHECK SAVE RESPONSE", res);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<View
@@ -32,6 +42,8 @@ const AddTsaModal = ({ isVisible, close }: Props) => {
 			}}
 		>
 			<Modal
+				animationInTiming={400}
+				animationOutTiming={400}
 				isVisible={isVisible}
 				onBackdropPress={close}
 				deviceWidth={deviceWidth}

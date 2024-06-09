@@ -51,7 +51,10 @@ const BottomNav = () => {
 			<Tab.Screen
 				name="AccountStack"
 				component={ProfileStack}
-				options={{ tabBarIcon: profileTabIcon, title: "Account" }}
+				options={{
+					tabBarIcon: profileTabIcon,
+					title: "Profile",
+				}}
 			/>
 		</Tab.Navigator>
 	);
