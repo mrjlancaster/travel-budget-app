@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-
 import React from "react";
 
 type Props = {
@@ -12,8 +11,8 @@ const TsaPrecheckCard = ({ openModal }: Props) => {
 			<Text style={styles.title}>TSA PreCheck</Text>
 
 			<Text style={styles.desc}>
-				Have your number with you to make travel easy. Remember, you won't
-				need to remove your shoes or belt or jackets!
+				Having your KTN number with you makes travel easy. Remember, you
+				won't need to remove your shoes or belt or jackets!
 			</Text>
 
 			<TouchableOpacity style={styles.button} onPress={openModal}>

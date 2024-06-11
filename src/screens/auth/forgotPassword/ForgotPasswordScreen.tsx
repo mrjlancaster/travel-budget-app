@@ -55,7 +55,7 @@ export default function ForgotPasswordScreen({
 								placeholder="Enter your email"
 								value={email}
 								autoCapitalize="none"
-								onChangeText={(text) => setEmail(text)}
+								onChangeText={(text: string) => setEmail(text)}
 							/>
 							<Button
 								onPress={handlePasswordReset}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Dimensions,
 	Platform,
@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import Modal from "react-native-modal";
-import { useAddTsaPreCheckMutation } from "../../services/api/usersApi";
+import { useUpdateUserMutation } from "../../services/api/usersApi";
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight =
 	Platform.OS === "ios" ? Dimensions.get("window").height : null;
@@ -21,12 +21,17 @@ type Props = {
 
 const AddTsaModal = ({ isVisible, close }: Props) => {
 	const [input, onChangeText] = useState("");
-	const [addTsa, { isLoading }] = useAddTsaPreCheckMutation();
+	const [updateUser, { isLoading }] = useUpdateUserMutation();
 
 	const handleSave = async () => {
 		try {
-			const res = await addTsa({ tsa_precheck: input }).unwrap();
+			const res = await updateUser(input).unwrap();
 			console.log("TSA PRECHECK SAVE RESPONSE", res);
+
+			if (res.success) {
+				onChangeText("");
+				close();
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -50,11 +55,11 @@ const AddTsaModal = ({ isVisible, close }: Props) => {
 				deviceHeight={deviceHeight}
 			>
 				<View style={styles.content}>
-					<Text style={styles.title}>Enter your TSA number:</Text>
+					<Text style={styles.title}>Enter your KTN</Text>
 					<View style={styles.form}>
 						<TextInput
 							style={styles.input}
-							placeholder="Tsa precheck number"
+							placeholder="Known Traveler Number"
 							value={input}
 							autoCapitalize="none"
 							returnKeyLabel="Done"
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	title: {
-		fontSize: 18,
+		fontSize: 24,
 		top: 20,
 		fontWeight: "500",
 	},
@@ -96,7 +101,9 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: "#F1F1F1",
 		padding: 10,
+		backgroundColor: "#F1F1F1",
 		borderRadius: 5,
+		fontSize: 15,
 		width: "75%",
 	},
 	button: {
@@ -107,9 +114,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	buttonText: {
-		fontWeight: "500",
-		color: "#fff",
 		fontSize: 15,
+		color: "#fff",
+		fontWeight: "bold",
+		textTransform: "uppercase",
 	},
 });
 

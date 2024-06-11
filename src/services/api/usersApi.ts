@@ -2,15 +2,16 @@ import { api, config } from "../index";
 
 export const usersApi = api.injectEndpoints({
 	endpoints: (build) => ({
-		addTsaPreCheck: build.mutation({
-			query: (data) => ({
+		updateUser: build.mutation({
+			query: ({ ...data }) => ({
 				url: "/users",
 				method: "PATCH",
 				body: data,
-				// headers: config.headers,
+				headers: config.headers,
 			}),
+			// invalidatesTags: ["Post"],
 		}),
 	}),
 });
 
-export const { useAddTsaPreCheckMutation } = usersApi;
+export const { useUpdateUserMutation } = usersApi;

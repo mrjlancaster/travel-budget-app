@@ -22,7 +22,7 @@ import axios, { AxiosResponse } from "axios";
 import { refreshToken } from "../api/authApi";
 
 const Root = () => {
-	const { isAuthenticated } = useAppSelector(selectAuth);
+	const { user, isAuthenticated } = useAppSelector(selectAuth);
 	console.error("IS AUTH", isAuthenticated);
 	const [loading, setLoading] = useState(true);
 	// const [handleRefresh, { isLoading }] = useRefreshTokenMutation();
@@ -73,9 +73,9 @@ const Root = () => {
 	};
 
 	useEffect(() => {
-		initAsync();
-		// setLoading(false);
-	}, [isAuthenticated]);
+		// initAsync();
+		setLoading(false);
+	}, [isAuthenticated, user]);
 
 	if (loading) {
 		return (

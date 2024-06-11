@@ -31,9 +31,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 		isSuccess,
 		isFetching,
 		error,
-	} = useGetUpcomingTripsQuery({
-		skip: skip,
-	});
+	} = useGetUpcomingTripsQuery({ skip });
 
 	console.log(upcomingTrips);
 

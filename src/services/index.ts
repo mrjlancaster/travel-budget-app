@@ -48,10 +48,11 @@ const baseQueryWithReauth: BaseQueryFn<
 
 	if (result.error && isUnauthenticated) {
 		const refreshToken = await getRefreshToken();
+
 		// try to get a new token
 		const options = {
 			url: "/auth/refresh",
-			method: "POST",
+			method: "GET",
 			body: { refreshToken },
 		};
 
@@ -63,6 +64,8 @@ const baseQueryWithReauth: BaseQueryFn<
 			},
 			extraOptions
 		);
+
+		console.log("REFRESH TOKEN RESPONSE", refreshToken);
 
 		if (data?.success) {
 			console.error("ACCESS TOKEN IN SERVICES", data.data.accessToken);
