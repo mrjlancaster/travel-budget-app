@@ -1,9 +1,26 @@
-import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
+import {
+	View,
+	Text,
+	ScrollView,
+	StyleSheet,
+	Image,
+	RefreshControl,
+} from "react-native";
 import React from "react";
 
-const NoTripsView = () => {
+type Props = {
+	onRefresh: () => void;
+	refreshing: boolean;
+};
+
+const NoTripsView = ({ onRefresh, refreshing }: Props) => {
 	return (
-		<ScrollView contentContainerStyle={styles.noTripsViewContainer}>
+		<ScrollView
+			contentContainerStyle={styles.noTripsViewContainer}
+			refreshControl={
+				<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+			}
+		>
 			<Image
 				source={require("../../assets/notrips.png")}
 				style={styles.illustration}

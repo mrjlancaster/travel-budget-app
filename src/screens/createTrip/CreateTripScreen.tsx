@@ -31,7 +31,7 @@ function formatDate(date: any) {
 const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 	const newTripDraft = useAppSelector(selectNewTripDraft);
 	console.log("DRAFT => ", newTripDraft);
-	const [createTrip, reuslt] = useCreateTripMutation();
+	const [createTrip, result] = useCreateTripMutation();
 	const [lastEdited, setLastEdited] = useState<any>("");
 	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useAppDispatch();

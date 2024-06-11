@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 	label: {
 		// fontWeight: "500",
 		opacity: 0.8,
-		fontSize: 16,
+		fontSize: 17,
 		left: 10,
 	},
 	inputGroup: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 		// marginTop: 20,
 	},
 	input: {
-		fontSize: 16,
+		fontSize: 17,
 	},
 });
 

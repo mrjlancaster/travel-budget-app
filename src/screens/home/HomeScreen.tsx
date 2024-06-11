@@ -58,7 +58,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 			}
 		}
 
-		console.log("SUCCESS", isSuccess);
 		setSkip(true);
 	}, [isFetching]);
 
