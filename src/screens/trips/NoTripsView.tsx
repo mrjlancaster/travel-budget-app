@@ -18,7 +18,11 @@ const NoTripsView = ({ onRefresh, refreshing }: Props) => {
 		<ScrollView
 			contentContainerStyle={styles.noTripsViewContainer}
 			refreshControl={
-				<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+				<RefreshControl
+					refreshing={refreshing}
+					onRefresh={onRefresh}
+					progressViewOffset={20}
+				/>
 			}
 		>
 			<Image
@@ -37,13 +41,12 @@ const NoTripsView = ({ onRefresh, refreshing }: Props) => {
 
 const styles = StyleSheet.create({
 	noTripsViewContainer: {
-		height: "100%",
 		// justifyContent: "center",
 		gap: 40,
 		alignItems: "center",
 	},
 	illustration: {
-		maxHeight: 350,
+		height: 350,
 		maxWidth: 350,
 		marginTop: 40,
 	},

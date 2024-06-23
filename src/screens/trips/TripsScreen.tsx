@@ -16,7 +16,7 @@ const data = [{ dest: "Austin texas" }];
 
 const TripsScreen = () => {
 	const [skip, setSkip] = useState(true);
-	const [refreshing, setRefreshing] = useState(true);
+	const [refreshing, setRefreshing] = useState(false);
 	const { allTrips: myTrips } = useAppSelector(selectTrips);
 	console.log("MY TRIPS", myTrips);
 	const dispatch = useAppDispatch();
@@ -87,7 +87,7 @@ const TripsScreen = () => {
 			{isLoading ? (
 				<Loading />
 			) : !trips || !trips.length ? (
-				<NoTripsView />
+				<NoTripsView onRefresh={onRefresh} refreshing={refreshing} />
 			) : (
 				<List onRefresh={onRefresh} refreshing={refreshing} />
 			)}

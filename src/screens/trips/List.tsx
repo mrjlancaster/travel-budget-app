@@ -68,7 +68,11 @@ const List = ({ onRefresh, refreshing }: Props) => {
 			renderItem={({ item }) => <Item details={item} />}
 			keyExtractor={(item) => String(item.id)}
 			refreshControl={
-				<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+				<RefreshControl
+					onRefresh={onRefresh}
+					refreshing={refreshing}
+					progressViewOffset={20}
+				/>
 			}
 		>
 			<Text>List</Text>
