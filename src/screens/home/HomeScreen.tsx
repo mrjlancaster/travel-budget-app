@@ -24,6 +24,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [skip, setSkip] = useState(false);
 	const [isTsaModalShown, setIsTsaModalShown] = useState(false);
+	console.log(data);
 
 	const {
 		data: upcomingTrips,
@@ -54,7 +55,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 	useEffect(() => {
 		if (isSuccess) {
 			if (upcomingTrips.length) {
-				setData(upcomingTrips);
+				// setData(upcomingTrips);
 			}
 		}
 
