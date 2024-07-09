@@ -19,7 +19,7 @@ import AddTsaModal from "../../components/modals/AddTsaModal";
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
 	const [data, setData] = useState([]);
-	const { user, isAuthenticated } = useSelector(selectUser);
+	// const { user, isAuthenticated } = useSelector(selectUser);
 	const [refreshing, setRefreshing] = useState(false);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [skip, setSkip] = useState(false);

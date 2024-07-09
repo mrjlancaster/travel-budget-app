@@ -6,10 +6,18 @@ type Props = {
 	onPress: () => void;
 };
 
-const AppButton = ({ onPress, title }: Props) => {
+const AppButton = ({
+	onPress,
+	title,
+	buttonContainerStyle,
+	labelStyle,
+}: Props) => {
 	return (
-		<TouchableOpacity onPress={onPress} style={styles.container}>
-			<Text style={styles.buttonText}>{title}</Text>
+		<TouchableOpacity
+			onPress={onPress}
+			style={[styles.container, buttonContainerStyle]}
+		>
+			<Text style={[styles.buttonText, labelStyle]}>{title}</Text>
 		</TouchableOpacity>
 	);
 };

@@ -44,6 +44,7 @@ export type ProfileStackParamList = {
 	ProfileScreen: undefined;
 	EditProfile: undefined;
 	Notifications: undefined;
+	TravelDocuments: undefined;
 };
 
 export type ProfileScreenProps = NativeStackScreenProps<

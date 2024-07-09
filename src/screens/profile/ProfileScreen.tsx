@@ -15,6 +15,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProfileScreenProps } from "../../navigation/types";
 import LogoutModal from "../../components/modals/LogoutModal";
+import AppButton from "../../components/buttons/AppButton";
+import CustomButton from "../../components/buttons/CustomButton";
 
 type Item = {
 	label: string;
@@ -22,16 +24,26 @@ type Item = {
 };
 
 const ListItem = ({ label, action }: Item) => {
+	const logoutLabelStyle = { color: "red" };
+
 	return (
 		<TouchableOpacity style={styles.listItem} onPress={action}>
-			<Text style={[styles.listItemLabel]}>{label}</Text>
+			<Text
+				style={[
+					styles.listItemLabel,
+					label === "Logout" ? logoutLabelStyle : null,
+				]}
+			>
+				{label}
+			</Text>
 			<Icon name="chevron-forward-outline" size={24} color="#7D848D" />
 		</TouchableOpacity>
 	);
 };
 
 const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
-	const { user } = useAppSelector(selectUser);
+	// const { user } = useAppSelector(selectUser);
+	const user = "Jonathan";
 	const dispatch = useAppDispatch();
 	const [isLogoutModalShown, setIsLogoutModalShown] = useState(false);
 
@@ -43,6 +55,10 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 		{
 			action: () => navigation.navigate("Notifications"),
 			label: "Notifications",
+		},
+		{
+			label: "Travel documents",
+			action: () => navigation.navigate("TravelDocuments"),
 		},
 		{
 			action: () => navigation.navigate("Settings"),
@@ -140,8 +156,8 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	listItemLabel: {
-		fontSize: 17,
-		fontWeight: "500",
+		fontSize: 18,
+		fontWeight: "400",
 	},
 	actionContainer: {
 		flex: 1,

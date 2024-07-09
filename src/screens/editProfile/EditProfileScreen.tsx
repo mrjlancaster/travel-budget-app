@@ -3,27 +3,32 @@ import React from "react";
 import { EditProfileProps } from "../../navigation/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MyInput from "../../components/form/MyInput";
+import AppButton from "../../components/buttons/AppButton";
 
 const EditProfileScreen = ({ navigation }: EditProfileProps) => {
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView contentContainerStyle={styles.scrollView}>
-				<Text style={styles.title}>Edit your information</Text>
-				<View style={styles.inputGroup}>
-					<View style={styles.inputWrapper}>
-						<Text style={styles.label}>First Name</Text>
-						<MyInput />
+			<View style={styles.content}>
+				<ScrollView contentContainerStyle={styles.scrollView}>
+					<Text style={styles.title}>Edit your information</Text>
+					<View style={styles.inputGroup}>
+						<View style={styles.inputWrapper}>
+							<Text style={styles.label}>First Name</Text>
+							<MyInput />
+						</View>
+						<View style={styles.inputWrapper}>
+							<Text style={styles.label}>Last Name</Text>
+							<MyInput />
+						</View>
+						<View style={styles.inputWrapper}>
+							<Text style={styles.label}>Email</Text>
+							<MyInput />
+						</View>
 					</View>
-					<View style={styles.inputWrapper}>
-						<Text style={styles.label}>Last Name</Text>
-						<MyInput />
-					</View>
-					<View style={styles.inputWrapper}>
-						<Text style={styles.label}>Email</Text>
-						<MyInput />
-					</View>
-				</View>
-			</ScrollView>
+				</ScrollView>
+
+				<AppButton title="SAVE" onPress={() => {}} />
+			</View>
 		</SafeAreaView>
 	);
 };
@@ -33,11 +38,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#fff",
 	},
+	content: {
+		flex: 1,
+		paddingHorizontal: 24,
+	},
 	scrollView: {
 		alignItems: "center",
 		justifyContent: "center",
 		flex: 1,
-		paddingHorizontal: 24,
 	},
 	title: {
 		position: "absolute",

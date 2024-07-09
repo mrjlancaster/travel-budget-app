@@ -89,7 +89,7 @@ const Root = () => {
 
 	return (
 		<UserInactivityProvider>
-			{isAuthenticated ? <BottomNav /> : <AuthStack />}
+			{!isAuthenticated ? <BottomNav /> : <AuthStack />}
 		</UserInactivityProvider>
 	);
 };
