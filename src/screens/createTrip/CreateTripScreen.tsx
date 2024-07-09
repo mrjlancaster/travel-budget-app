@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, ScrollView } from "react-native";
+import {
+	SafeAreaView,
+	Text,
+	View,
+	Keyboard,
+	TouchableWithoutFeedback,
+} from "react-native";
 import { styles } from "./styles";
 import { Icon } from "@rneui/themed";
 import { HomeStackProps } from "../../navigation/types";
@@ -48,6 +54,7 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [airlines, setAirlines] = useState<Airlines>([]);
 	const [airlineSelected, setAirlineSelected] = useState<Airline | null>(null);
+	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const dispatch = useAppDispatch();
 	const { data, isSuccess } = useGetAirlinesQuery(undefined, { skip });
 
@@ -155,72 +162,81 @@ const CreateTripScreen = ({ navigation }: HomeStackProps) => {
 
 	console.log(newTripDraft);
 
+	const handleScreenPress = () => {
+		Keyboard.dismiss();
+		setDropdownOpen(false);
+	};
+
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-			<View style={styles.container}>
-				<View style={styles.formContainer}>
-					<InputGroupContainer
-						name="origin"
-						label="Where from"
-						value={state.origin}
-						placeholder="Enter an origin"
-						handleEndEditing={handleBlur}
-						onchange={handleChange}
-					>
-						<PlaneTakeoffIcon />
-					</InputGroupContainer>
+		<TouchableWithoutFeedback onPress={handleScreenPress}>
+			<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+				<View style={styles.container}>
+					<View style={styles.formContainer}>
+						<InputGroupContainer
+							name="origin"
+							label="Where from"
+							value={state.origin}
+							placeholder="Enter an origin"
+							handleEndEditing={handleBlur}
+							onchange={handleChange}
+						>
+							<PlaneTakeoffIcon />
+						</InputGroupContainer>
 
-					<InputGroupContainer
-						name="destination"
-						label="Where to"
-						value={state.destination}
-						placeholder="Enter a destination"
-						handleEndEditing={handleBlur}
-						onchange={handleChange}
-					>
-						<PlaneLandingIcon />
-					</InputGroupContainer>
+						<InputGroupContainer
+							name="destination"
+							label="Where to"
+							value={state.destination}
+							placeholder="Enter a destination"
+							handleEndEditing={handleBlur}
+							onchange={handleChange}
+						>
+							<PlaneLandingIcon />
+						</InputGroupContainer>
 
-					<View style={styles.inputGroup}>
-						<View style={styles.dateInputWrapper}>
-							<DateButton
-								label="From"
-								date={state.departure_date}
-								fieldName="departure_date"
-							/>
-							<DateButton
-								label="To"
-								date={state.return_date}
-								fieldName="return_date"
+						<View style={styles.inputGroup}>
+							<View style={styles.dateInputWrapper}>
+								<DateButton
+									label="From"
+									date={state.departure_date}
+									fieldName="departure_date"
+								/>
+								<DateButton
+									label="To"
+									date={state.return_date}
+									fieldName="return_date"
+								/>
+							</View>
+						</View>
+
+						<View style={styles.inputGroup}>
+							<Text style={styles.label}>Airline</Text>
+							<AppDropdownPicker
+								open={dropdownOpen}
+								setOpen={setDropdownOpen}
+								value={airlineSelected}
+								setValue={setAirlineSelected}
+								items={airlines}
+								setItems={setAirlines}
+								onChangeValue={(val: string) =>
+									handleAirlineSelection(val)
+								}
+								placeholder="Select Airline"
+								style={styles.ddInput}
+								textStyle={styles.ddPlaceholder}
+								labelStyle={styles.ddLabel}
+								dropDownContainerStyle={styles.openContainer}
+								listItemLabelStyle={styles.listItem}
 							/>
 						</View>
 					</View>
 
-					<View style={styles.inputGroup}>
-						<Text style={styles.label}>Airline</Text>
-						<AppDropdownPicker
-							value={airlineSelected}
-							setValue={setAirlineSelected}
-							items={airlines}
-							setItems={setAirlines}
-							onChangeValue={(val: string) =>
-								handleAirlineSelection(val)
-							}
-							placeholder="Select Airline"
-							style={styles.ddInput}
-							textStyle={styles.ddPlaceholder}
-							labelStyle={styles.ddLabel}
-							dropDownContainerStyle={styles.openContainer}
-							listItemLabelStyle={styles.listItem}
-						/>
+					<View style={styles.submitButtonWrapper}>
+						<CustomButton onPress={handleSubmit} title="Create" />
 					</View>
 				</View>
-
-				<View style={styles.submitButtonWrapper}>
-					<CustomButton onPress={handleSubmit} title="Create" />
-				</View>
-			</View>
-		</SafeAreaView>
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	);
 };
 

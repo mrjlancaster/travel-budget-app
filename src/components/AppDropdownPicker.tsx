@@ -16,8 +16,16 @@ type Items = Value[];
 // 	props: any;
 // };
 
-const AppDropdownPicker = ({ value, setValue, items, setItems, ...props }) => {
-	const [open, setOpen] = useState(false);
+const AppDropdownPicker = ({
+	open,
+	setOpen,
+	value,
+	setValue,
+	items,
+	setItems,
+	...props
+}) => {
+	// const [open, setOpen] = useState(false);
 
 	return (
 		<DropDownPicker
