@@ -8,6 +8,12 @@ interface Trip {
 	airline: string;
 }
 
+interface Airline {
+	name: string;
+	iata_code: string;
+}
+
+type Airlines = Airline[];
 type Trips = Trip[];
 
 export const tripsApi = api.injectEndpoints({
@@ -51,6 +57,17 @@ export const tripsApi = api.injectEndpoints({
 			}),
 		}),
 
+		getAirlines: builder.query({
+			query: () => ({
+				url: "/trips/airlines",
+			}),
+			transformResponse: (response: { data: Airlines }, meta, arg) => {
+				return response.data;
+			},
+			transformErrorResponse: (response, meta, arg) => response.status,
+			keepUnusedDataFor: 0.0001,
+		}),
+
 		deleteTrip: builder.mutation({
 			query: (id) => ({
 				url: `/trips/${id}`,
@@ -67,4 +84,5 @@ export const {
 	useCreateTripMutation,
 	useUpdateTripMutation,
 	useDeleteTripMutation,
+	useGetAirlinesQuery,
 } = tripsApi;

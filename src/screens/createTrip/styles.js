@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		// paddingTop: 20,
 	},
+	formContainer: {
+		flex: 1,
+	},
 	screenTitle: {
 		marginVertical: 20,
 		paddingHorizontal: 20,
@@ -29,6 +32,27 @@ export const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	submitButtonWrapper: {
-		marginTop: 20,
+		// justifyContent: "flex-end",
+	},
+
+	ddInput: {
+		backgroundColor: "#F2F2F2",
+		borderColor: "#E5E4E2",
+		borderWidth: 1,
+		borderRadius: 4,
+	},
+	openContainer: {
+		borderWidth: 1,
+		borderColor: "#E5E4E2",
+		padding: 5,
+	},
+	ddPlaceholder: {
+		fontSize: 17,
+	},
+	ddLabel: {
+		fontSize: 17,
+	},
+	listItem: {
+		fontSize: 17,
 	},
 });

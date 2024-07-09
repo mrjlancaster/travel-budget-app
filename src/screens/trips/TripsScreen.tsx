@@ -27,7 +27,7 @@ const TripsScreen = () => {
 		isSuccess,
 		isFetching,
 		error,
-	} = useGetTripsQuery({ skip: skip });
+	} = useGetTripsQuery(undefined, { skip: skip });
 	console.log("TRIPS", trips);
 	console.error("error", error);
 

@@ -19,8 +19,9 @@ const LandingScreen = ({ navigation }: LandingProps) => {
 						containerStyle={styles.button}
 						onPress={() => navigation.navigate("Login")}
 						size="lg"
-						color="#3B71F3"
-						radius="sm"
+						// color="#3B71F3"
+						color="#0F52BA"
+						radius="lg"
 					>
 						Login
 					</Button>
@@ -29,8 +30,9 @@ const LandingScreen = ({ navigation }: LandingProps) => {
 						containerStyle={styles.button}
 						onPress={() => navigation.navigate("Signup")}
 						size="lg"
-						color="#3B71F3"
-						radius="sm"
+						// color="#3B71F3"
+						color="#0F52BA"
+						radius="lg"
 					>
 						Sign Up
 					</Button>
